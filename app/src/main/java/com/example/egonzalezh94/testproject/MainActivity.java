@@ -1,16 +1,25 @@
 package com.example.egonzalezh94.testproject;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -20,9 +29,13 @@ import java.sql.Statement;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String URL = "jdbc:mysql://10.1.86.20:8889/medical_app";
-    private static final String USER = "test";
-    private static final String PASS = "test";
+    static final String API_URL = "http://192.168.1.71/api.php/clients";
+    static final String USER = "test";
+    static final String PASS = "test";
+
+    EditText nameText;
+    TextView resultBox;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +52,23 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        createClient("Andrew Segal", "Computer Science", "PROFESSOR");
-        testDB();
+
+        nameText = (EditText) findViewById(R.id.nameText);
+        resultBox = (TextView) findViewById(R.id.newTextBox);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        Button queryButton = (Button) findViewById(R.id.queryButton);
+
+        queryButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new RetrieveFeedTask().execute();
+            }
+        });
+
+        //createClient("Andrew Segal", "Computer Science", "PROFESSOR");
+        //testDB();
 
 
     }
@@ -76,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = (TextView) this.findViewById(R.id.newTextBox);
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection testConn = DriverManager.getConnection(URL, USER, PASS);
+            Connection testConn = DriverManager.getConnection(API_URL, USER, PASS);
             String result = "";
 
             Statement statement = testConn.createStatement();
@@ -116,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = (TextView) this.findViewById(R.id.newTextBox);
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection testConn = DriverManager.getConnection(URL, USER, PASS);
+            Connection testConn = DriverManager.getConnection(API_URL, USER, PASS);
 
             Statement statement = testConn.createStatement();
 
@@ -134,4 +162,72 @@ public class MainActivity extends AppCompatActivity {
             tv.setText(e.toString());
         }
     }
+
+    class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
+
+        private Exception exception;
+        //String name;
+        //RetrieveFeedTask(String name) {
+         //   this.name = name;
+        //}
+
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            resultBox.setText("");
+        }
+
+        protected String doInBackground(Void... urls) {
+            //String name = nameText.getText().toString();
+            // Do some validation here
+
+            try {
+                URL url = new URL(API_URL);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    return stringBuilder.toString();
+                } finally {
+                    urlConnection.disconnect();
+                }
+            } catch (Exception e) {
+                //resultBox.setText(e.toString());
+                Log.e("ERROR",e.toString(),e);
+
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String response) {
+            if (response == null) {
+                response = "THERE WAS AN ERROR";
+            }
+            progressBar.setVisibility(View.GONE);
+            Log.i("INFO", response);
+            resultBox.setText(response);
+            // TODO: check this.exception
+            // TODO: do something with the feed
+
+//            try {
+//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
+//                String requestID = object.getString("requestId");
+//                int likelihood = object.getInt("likelihood");
+//                JSONArray photos = object.getJSONArray("photos");
+//                .
+//                .
+//                .
+//                .
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+        }
+
+    }
+
 }
+
