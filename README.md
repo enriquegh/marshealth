@@ -13,6 +13,7 @@ NOTE: This is implying that you are using a web service on your own computer con
 
 1. Download MAMP, WAMP, LAMP, XAMP or any web service of your choice.
 2. Download the php-crud-api specifically the "api.php" file and put it in the root of your web directory.
+https://github.com/mevdschee/php-crud-api
 3. Have Android Studio downloaded with API 16 or higher installed.
 
 ###Configuring Web service
