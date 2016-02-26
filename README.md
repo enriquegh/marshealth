@@ -42,8 +42,8 @@ You can restore a database by using phpMyAdmin which comes in MAMP and WAMP.
     'password'=>'root',
     'database'=>'localhost',
     'charset'=>'utf8'
-    ));
-     $api->executeCommand();
+    ));  
+    $api->executeCommand();
 
 ###Modifying Android app
 1. After opening Android project in Android Studio open the MainActivity.java file located in:
