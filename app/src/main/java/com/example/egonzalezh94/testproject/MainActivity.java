@@ -2,40 +2,40 @@ package com.example.egonzalezh94.testproject;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://192.168.1.71/api.php/clients";
-    static final String USER = "test";
-    static final String PASS = "test";
+    static final String API_URL = "http://INSERT_IP_ADDRESS/api.php/clients";
 
     EditText nameText;
+    EditText majorText;
     TextView resultBox;
     ProgressBar progressBar;
+    Spinner dropDownMenu;
+
+    String name;
+    String major;
+    String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,32 +44,35 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         nameText = (EditText) findViewById(R.id.nameText);
+        majorText = (EditText) findViewById(R.id.majorText);
         resultBox = (TextView) findViewById(R.id.newTextBox);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        dropDownMenu = (Spinner) findViewById(R.id.StatusText);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.status_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        dropDownMenu.setAdapter(adapter);
 
         Button queryButton = (Button) findViewById(R.id.queryButton);
-
         queryButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                new RetrieveFeedTask().execute();
+                status = dropDownMenu.getSelectedItem().toString();
+                name = nameText.getText().toString();
+                major = majorText.getText().toString();
+
+                new SendClient().execute(name,major,status);
+                new RetrieveClient().execute();
+
             }
         });
-
-        //createClient("Andrew Segal", "Computer Science", "PROFESSOR");
-        //testDB();
-
 
     }
 
@@ -95,79 +98,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void testDB() {
-
-        StrictMode.ThreadPolicy policy =
-                new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-
-        TextView tv = (TextView) this.findViewById(R.id.newTextBox);
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection testConn = DriverManager.getConnection(API_URL, USER, PASS);
-            String result = "";
-
-            Statement statement = testConn.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM clients");
-            ResultSetMetaData metaData = resultSet.getMetaData();
-
-            while (resultSet.next()) {
-                result += metaData.getColumnName(1) + resultSet.getInt(1) + "\n";
-                result += metaData.getColumnName(2) + resultSet.getString(2) + "\n";
-                result += metaData.getColumnName(3) + resultSet.getString(3) + "\n";
-                result += metaData.getColumnName(4) + resultSet.getString(4) + "\n";
-
-            }
-
-            tv.setText(result);
-            CharSequence text = tv.getText();
-
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            tv.setText(e.toString());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            tv.setText(e.toString());
-        }
-
-
-    }
-
-    public void createClient(String name, String major, String status) {
-
-        StrictMode.ThreadPolicy policy =
-                new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        TextView tv = (TextView) this.findViewById(R.id.newTextBox);
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection testConn = DriverManager.getConnection(API_URL, USER, PASS);
-
-            Statement statement = testConn.createStatement();
-
-
-            int i = statement.executeUpdate(String.format("INSERT INTO clients (id, name, major, status) VALUES (NULL, '%s', '%s', '%s')", name, major, status));
-
-
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            tv.setText(e.toString());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            tv.setText(e.toString());
-        }
-    }
-
-    class RetrieveFeedTask extends AsyncTask<Void, Void, String> {
+    class RetrieveClient extends AsyncTask<Void, Void, String> {
 
         private Exception exception;
         //String name;
-        //RetrieveFeedTask(String name) {
+        //RetrieveClient(String name) {
          //   this.name = name;
         //}
 
@@ -196,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                     urlConnection.disconnect();
                 }
             } catch (Exception e) {
-                //resultBox.setText(e.toString());
+
                 Log.e("ERROR",e.toString(),e);
 
                 return null;
@@ -205,12 +140,11 @@ public class MainActivity extends AppCompatActivity {
 
         protected void onPostExecute(String response) {
             if (response == null) {
-                response = "THERE WAS AN ERROR";
+                response = "THERE WAS AN ERROR ON RETRIEVECLIENT";
             }
             progressBar.setVisibility(View.GONE);
             Log.i("INFO", response);
             resultBox.setText(response);
-            // TODO: check this.exception
             // TODO: do something with the feed
 
 //            try {
@@ -229,5 +163,99 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    class SendClient extends AsyncTask<String, Void, String> {
+        String name;
+        String major;
+        String status;
+
+        int totalLength;
+
+
+        //String name;
+        //RetrieveClient(String name) {
+        //   this.name = name;
+        //}
+
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            resultBox.setText("");
+        }
+
+        protected String doInBackground(String... params) {
+            //String name = nameText.getText().toString();
+            // Do some validation here
+            name = params[0];
+            major = params[1];
+            status = params[2];
+            totalLength = name.length() + major.length() + status.length();
+
+            try {
+                URL url = new URL(API_URL);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestProperty("Connection", "close");
+                try {
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setChunkedStreamingMode(totalLength);
+                    Log.e("name", name);
+                    Log.e("major",major);
+                    Log.e("status",status);
+                    String urlParameters = "name=" + URLEncoder.encode(this.name, "UTF-8") +
+                            "&major=" + URLEncoder.encode(major, "UTF-8") +
+                            "&status=" + URLEncoder.encode(status, "UTF-8");
+
+                    DataOutputStream wr = new DataOutputStream(
+                            urlConnection.getOutputStream ());
+                    wr.writeBytes (urlParameters);
+                    wr.flush();
+                    wr.close();
+
+                    //TODO: EOFException is thrown when using API 16 or lower.
+                    BufferedReader bufferedReader = new BufferedReader(
+                            new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+
+
+                    return stringBuilder.toString();
+
+                } finally {
+                    urlConnection.disconnect();
+                }
+            } catch (Exception e) {
+
+                Log.e("ERROR",e.toString(),e);
+
+                return null;
+            }
+
+        }
+
+        protected void onPostExecute(String response) {
+            if (response == null) {
+                response = "THERE WAS AN ERROR IN SENDCLIENT";
+            }
+            progressBar.setVisibility(View.GONE);
+            Log.i("INFO", response);
+            // TODO: do something with the feed
+
+//            try {
+//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
+//                String requestID = object.getString("requestId");
+//                int likelihood = object.getInt("likelihood");
+//                JSONArray photos = object.getJSONArray("photos");
+//                .
+//                .
+//                .
+//                .
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+        }
+
+    }
 }
 
