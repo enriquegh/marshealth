@@ -25,7 +25,9 @@ import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://INSERT_IP_ADDRESS/api.php/clients";
+    static final String API_URL = "http://10.1.120.243/api.php/";
+    static final String CLIENT_URL = "clients2";
+    static final String APPOINTMENT_URL = "appointments";
 
     EditText nameText;
     EditText majorText;
@@ -68,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
                 name = nameText.getText().toString();
                 major = majorText.getText().toString();
 
-                new SendClient().execute(name,major,status);
-                new RetrieveClient().execute();
+                //new SendClient().execute(name,major,status);
+                new RetrieveSchedule().execute();
 
             }
         });
@@ -116,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             // Do some validation here
 
             try {
-                URL url = new URL(API_URL);
+                URL url = new URL(API_URL + CLIENT_URL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 try {
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
             totalLength = name.length() + major.length() + status.length();
 
             try {
-                URL url = new URL(API_URL);
+                URL url = new URL(API_URL + CLIENT_URL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestProperty("Connection", "close");
                 try {
@@ -257,5 +259,72 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    class RetrieveSchedule extends AsyncTask<Void, Void, String> {
+
+        private Exception exception;
+        //To show available appointments only
+        private static final String filter = "?filter=status,eq,0";
+
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            resultBox.setText("");
+        }
+
+        protected String doInBackground(Void... urls) {
+            //String name = nameText.getText().toString();
+            // Do some validation here
+
+            try {
+                //For now I believe this is insecure since the filter parameter is passed
+                //within the URL and could be manipulated.
+                //TODO: Figure out how to send parameter through request body
+                URL url = new URL(API_URL + APPOINTMENT_URL + filter);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                try {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line).append("\n");
+                    }
+                    bufferedReader.close();
+                    return stringBuilder.toString();
+                } finally {
+                    urlConnection.disconnect();
+                }
+            } catch (Exception e) {
+
+                Log.e("ERROR",e.toString(),e);
+
+                return null;
+            }
+        }
+
+        protected void onPostExecute(String response) {
+            if (response == null) {
+                response = "THERE WAS AN ERROR ON RETRIEVECLIENT";
+            }
+            progressBar.setVisibility(View.GONE);
+            Log.i("INFO", response);
+            resultBox.setText(response);
+            // TODO: do something with the feed
+
+//            try {
+//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
+//                String requestID = object.getString("requestId");
+//                int likelihood = object.getInt("likelihood");
+//                JSONArray photos = object.getJSONArray("photos");
+//                .
+//                .
+//                .
+//                .
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+        }
+
+    }
 }
+
 
