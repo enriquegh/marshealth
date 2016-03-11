@@ -75,9 +75,9 @@ These results are filtered in three different ways:
 1. Only results that have a status of 0 get received.
 *(filter[]=status,eq,0)*
 2. The results must be greater than or equal to the start date.
-*(filter[]=timeStart,ge,startDate)*
+*(filter[]=date,ge,startDate)*
 3. The results must be lesser than or equal to the end date.
-*(filter[]=timeEnd,le,endDate)*
+*(filter[]=date,le,endDate)*
 
 ***
 
