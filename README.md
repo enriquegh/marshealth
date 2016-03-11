@@ -64,16 +64,20 @@ app/src/main/java/com/example/egonzalezh94/testproject/MainActivity.java
 ##Things completed
 
 For now we are receiving available appointments from the endpoint /appointments.
-These appointments come as JSON String and the following three fields get parsed to the user:
-date: The date of the open appointment
-timeStart: When the appointment starts
-timeEnd: When the meeting ends
+These appointments come as JSON String and the following three fields get parsed to the user:  
+
+* **date:** The date of the open appointment  
+* **timeStart:** When the appointment starts  
+* **timeEnd:** When the meeting ends
 
 These results are filtered in three different ways:
 
 1. Only results that have a status of 0 get received.
+*(filter[]=status,eq,0)*
 2. The results must be greater than or equal to the start date.
+*(filter[]=timeStart,ge,startDate)*
 3. The results must be lesser than or equal to the end date.
+*(filter[]=timeEnd,le,endDate)*
 
 ***
 
