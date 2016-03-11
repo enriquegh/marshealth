@@ -6,6 +6,13 @@ This is a basic test of our Medical Mobile App which for now is called "Test Pro
 For the moment it currently has a very simple interface which involves one Activity called "Main Activity".
 This Activity contains two EditText Views for Start Date and End Date, a Send Button and a TextView wrapped in a ScrollView in order to be able to scroll the information.
 
+##Table of Contents
+1. [Running App](#running-app)
+2. [Things Completed](#things-completed)
+3. [Things to be done](#things-to-be-done)
+
+***
+
 ##Running App
 
 A few important things to do before making this work:
@@ -52,6 +59,7 @@ app/src/main/java/com/example/egonzalezh94/testproject/MainActivity.java
 2. Change the string API_URL to whatever IP address your machine currently has.
 3. After changing this, run the app, press search and a parsed list should pop up.
 
+***
 
 ##Things completed
 
@@ -62,9 +70,12 @@ timeStart: When the appointment starts
 timeEnd: When the meeting ends
 
 These results are filtered in three different ways:
+
 1. Only results that have a status of 0 get received.
 2. The results must be greater than or equal to the start date.
 3. The results must be lesser than or equal to the end date.
+
+***
 
 ##Things to be done
 
