@@ -1,9 +1,14 @@
 package com.example.egonzalezh94.testproject;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
@@ -14,6 +19,12 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -22,22 +33,22 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.1.120.243/api.php/";
+    static final String API_URL = "http://10.1.12.153/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
 
-    EditText nameText;
-    EditText majorText;
+    EditText startDateText;
+    EditText endDateText;
     TextView resultBox;
     ProgressBar progressBar;
-    Spinner dropDownMenu;
 
-    String name;
-    String major;
-    String status;
+    String startDate;
+    String endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,31 +58,23 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        nameText = (EditText) findViewById(R.id.nameText);
-        majorText = (EditText) findViewById(R.id.majorText);
+        startDateText = (EditText) findViewById(R.id.startDateText);
+        endDateText = (EditText) findViewById(R.id.endDateText);
         resultBox = (TextView) findViewById(R.id.newTextBox);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        dropDownMenu = (Spinner) findViewById(R.id.StatusText);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.status_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        dropDownMenu.setAdapter(adapter);
 
         Button queryButton = (Button) findViewById(R.id.queryButton);
         queryButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                status = dropDownMenu.getSelectedItem().toString();
-                name = nameText.getText().toString();
-                major = majorText.getText().toString();
+
+                startDate = startDateText.getText().toString();
+                endDate = endDateText.getText().toString();
 
                 //new SendClient().execute(name,major,status);
-                new RetrieveSchedule().execute();
+                new RetrieveSchedule().execute(startDate,endDate);
 
             }
         });
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         private Exception exception;
         //String name;
         //RetrieveClient(String name) {
-         //   this.name = name;
+        //   this.name = name;
         //}
 
         protected void onPreExecute() {
@@ -134,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
 
-                Log.e("ERROR",e.toString(),e);
+                Log.e("ERROR", e.toString(), e);
 
                 return null;
             }
@@ -199,15 +202,15 @@ public class MainActivity extends AppCompatActivity {
                     urlConnection.setDoOutput(true);
                     urlConnection.setChunkedStreamingMode(totalLength);
                     Log.e("name", name);
-                    Log.e("major",major);
-                    Log.e("status",status);
+                    Log.e("major", major);
+                    Log.e("status", status);
                     String urlParameters = "name=" + URLEncoder.encode(this.name, "UTF-8") +
                             "&major=" + URLEncoder.encode(major, "UTF-8") +
                             "&status=" + URLEncoder.encode(status, "UTF-8");
 
                     DataOutputStream wr = new DataOutputStream(
-                            urlConnection.getOutputStream ());
-                    wr.writeBytes (urlParameters);
+                            urlConnection.getOutputStream());
+                    wr.writeBytes(urlParameters);
                     wr.flush();
                     wr.close();
 
@@ -229,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
 
-                Log.e("ERROR",e.toString(),e);
+                Log.e("ERROR", e.toString(), e);
 
                 return null;
             }
@@ -260,21 +263,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class RetrieveSchedule extends AsyncTask<Void, Void, String> {
+    class RetrieveSchedule extends AsyncTask<String, Void, String> {
 
-        private Exception exception;
         //To show available appointments only
-        private static final String filter = "?filter=status,eq,0";
+
 
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             resultBox.setText("");
         }
 
-        protected String doInBackground(Void... urls) {
-            //String name = nameText.getText().toString();
-            // Do some validation here
-
+        protected String doInBackground(String... params) {
+            String dateStart = params[0], dateEnd = params[1];
+            /**
+             * This filter string will filter the results in three ways:
+             * 1. Send only results that have a status of 0 (meaning status is available)
+             * 2. Where the date is equal or greater than the start date.
+             * 3. Where the date is equal or less than the end date.
+             */
+            final String filter = String.format("?filter[]=status,eq,0&filter[]=date,ge,%s&filter[]=date,le,%s",dateStart,dateEnd);
             try {
                 //For now I believe this is insecure since the filter parameter is passed
                 //within the URL and could be manipulated.
@@ -295,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
 
-                Log.e("ERROR",e.toString(),e);
+                Log.e("ERROR", e.toString(), e);
 
                 return null;
             }
@@ -306,25 +313,38 @@ public class MainActivity extends AppCompatActivity {
                 response = "THERE WAS AN ERROR ON RETRIEVECLIENT";
             }
             progressBar.setVisibility(View.GONE);
-            Log.i("INFO", response);
-            resultBox.setText(response);
-            // TODO: do something with the feed
 
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-//                String requestID = object.getString("requestId");
-//                int likelihood = object.getInt("likelihood");
-//                JSONArray photos = object.getJSONArray("photos");
-//                .
-//                .
-//                .
-//                .
-//            } catch (JSONException e) {
-//                e.printStackTrace();
+            try {
+                String pastText;
+
+                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
+                JSONObject appointments = object.getJSONObject("appointments");
+                JSONArray recordsList = appointments.getJSONArray("records");
+
+                for (int i=0;i<recordsList.length();i++) {
+                    JSONArray records = recordsList.getJSONArray(i);
+                    String date = records.getString(0);
+                    String timeStart = records.getString(1);
+                    String timeEnd = records.getString(2);
+
+                    //TODO arrange records onto a schedule table.
+                    /**
+                     * For now the results are just being printed in order.
+                     */
+                    pastText = (String) resultBox.getText();
+                    String result = String.format("%s \n Date: %s Start: %s End: %s",pastText,date,timeStart,timeEnd);
+                    resultBox.setText(result);
+                }
+
+
+            } catch (JSONException e) {
+                Log.e("JSON error", e.toString(), e);
 //            }
+            }
+
         }
 
+
     }
+
 }
-
-

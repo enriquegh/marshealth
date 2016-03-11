@@ -14,25 +14,18 @@
     tools:showIn="@layout/activity_main">
 
     <EditText
-    android:id="@+id/nameText"
+    android:id="@+id/startDateText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:inputType="textEmailAddress"
-    android:hint="Enter full name"/>
+    android:hint="Enter start date yyyy-mm-dd"/>
 
     <EditText
-        android:id="@+id/majorText"
+        android:id="@+id/endDateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Enter your Major"/>
-
-    <Spinner
-        android:id="@+id/StatusText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Choose a role"/>
+        android:hint="Enter end date yyyy-mm-dd"/>
 
     <Button
         android:id="@+id/queryButton"
