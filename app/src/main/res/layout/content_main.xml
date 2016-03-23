@@ -13,28 +13,29 @@
     tools:context="com.example.egonzalezh94.testproject.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="373dp"
-        android:id="@+id/datePicker"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:datePickerMode="calendar" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_gravity="center_horizontal"
+        android:text="When are you available for an appointment?"
+        android:editable="false" />
 
     <EditText
     android:id="@+id/startDateText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:inputType="textEmailAddress"
-    android:hint="Enter start date yyyy-mm-dd"/>
+    android:hint="Enter start date yyyy-mm-dd"
+        android:focusable="false" />
 
     <EditText
         android:id="@+id/endDateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Enter end date yyyy-mm-dd"/>
+        android:hint="Enter end date yyyy-mm-dd"
+        android:focusable="false" />
 
     <Button
         android:id="@+id/queryButton"
@@ -43,6 +44,14 @@
         android:layout_gravity="end"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="Search"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:layout_gravity="center_horizontal"
+        android:text="Available timeslots:"
+        android:editable="false" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -57,7 +66,8 @@
             android:visibility="gone" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/progressBar">
             <TextView
                 android:id="@+id/newTextBox"
                 android:layout_width="wrap_content"

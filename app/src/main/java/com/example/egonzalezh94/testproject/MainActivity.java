@@ -1,5 +1,6 @@
 package com.example.egonzalezh94.testproject;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
@@ -40,18 +41,22 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.10.34.236/api.php/";
+    static final String API_URL = "http://192.168.1.105/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
 
     EditText startDateText;
     EditText endDateText;
-    DatePicker datePicker;
+
+    Calendar cal = Calendar.getInstance();
+
     TextView resultBox;
     ProgressBar progressBar;
 
@@ -70,16 +75,24 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        datePicker = (DatePicker) findViewById(R.id.datePicker);
         startDateText = (EditText) findViewById(R.id.startDateText);
-
-        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new dateChangeListener());
-
         endDateText = (EditText) findViewById(R.id.endDateText);
         resultBox = (TextView) findViewById(R.id.newTextBox);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        startDateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MainActivity.this, startListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        endDateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MainActivity.this, endListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         Button queryButton = (Button) findViewById(R.id.queryButton);
         queryButton.setOnClickListener(new View.OnClickListener() {
@@ -101,13 +114,47 @@ public class MainActivity extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
-    private class dateChangeListener implements DatePicker.OnDateChangedListener {
+    // Global listeners for startDate and endDate EditText objeects
+
+    DatePickerDialog.OnDateSetListener startListener = new DatePickerDialog.OnDateSetListener() {
+
         @Override
-        public void onDateChanged(DatePicker view, int year, int monthYear, int dayOfMonth) {
-            startDateText.setText("" + year + "-" + (monthYear > 9 ? (monthYear + 1) : "0" + (monthYear+1)) + "-" + (dayOfMonth > 9 ? dayOfMonth : "0" + dayOfMonth));
-            endDateText.setText("" + year + "-" + (monthYear > 9 ? (monthYear + 1) : "0" + (monthYear+1)) + "-" + (dayOfMonth < 10 ? dayOfMonth + 1 : "0" + dayOfMonth + 1));
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, monthOfYear);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateStart();
         }
     };
+
+
+    DatePickerDialog.OnDateSetListener endListener = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, monthOfYear);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateEnd();
+        }
+    };
+    // TODO Combine updateStart() and updateEnd() into one function somehow?
+    private void updateStart() {
+
+        String dateFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+
+        startDateText.setText(sdf.format(cal.getTime()));
+
+    }
+    private void updateEnd() {
+
+        String dateFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+
+        endDateText.setText(sdf.format(cal.getTime()));
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
