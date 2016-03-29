@@ -48,13 +48,14 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://192.168.1.105/api.php/";
+    static final String API_URL = "http://10.10.34.56/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
 
     EditText startDateText;
     EditText endDateText;
 
+    // This will be opened when focus is changed to startDateText or endDateText
     Calendar cal = Calendar.getInstance();
 
     TextView resultBox;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         resultBox = (TextView) findViewById(R.id.newTextBox);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        // A listener for each date input box
         startDateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Global listeners for startDate and endDate EditText objeects
-
     DatePickerDialog.OnDateSetListener startListener = new DatePickerDialog.OnDateSetListener() {
 
         @Override
