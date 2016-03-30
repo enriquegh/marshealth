@@ -1,8 +1,10 @@
 package com.example.egonzalezh94.testproject;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +17,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.CalendarView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,22 +41,33 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.1.12.153/api.php/";
+    static final String API_URL = "http://10.10.34.56/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
 
     EditText startDateText;
     EditText endDateText;
+
+    // This will be opened when focus is changed to startDateText or endDateText
+    Calendar cal = Calendar.getInstance();
+
     TextView resultBox;
     ProgressBar progressBar;
 
     String startDate;
     String endDate;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +76,25 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         startDateText = (EditText) findViewById(R.id.startDateText);
         endDateText = (EditText) findViewById(R.id.endDateText);
         resultBox = (TextView) findViewById(R.id.newTextBox);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        // A listener for each date input box
+        startDateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MainActivity.this, startListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
+        endDateText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MainActivity.this, endListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
 
         Button queryButton = (Button) findViewById(R.id.queryButton);
         queryButton.setOnClickListener(new View.OnClickListener() {
@@ -74,10 +106,54 @@ public class MainActivity extends AppCompatActivity {
                 endDate = endDateText.getText().toString();
 
                 //new SendClient().execute(name,major,status);
-                new RetrieveSchedule().execute(startDate,endDate);
+                new RetrieveSchedule().execute(startDate, endDate);
 
             }
         });
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    // Global listeners for startDate and endDate EditText objeects
+    DatePickerDialog.OnDateSetListener startListener = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, monthOfYear);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateStart();
+        }
+    };
+
+
+    DatePickerDialog.OnDateSetListener endListener = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, monthOfYear);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateEnd();
+        }
+    };
+    // TODO Combine updateStart() and updateEnd() into one function somehow?
+    private void updateStart() {
+
+        String dateFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+
+        startDateText.setText(sdf.format(cal.getTime()));
+
+    }
+    private void updateEnd() {
+
+        String dateFormat = "yyyy-MM-dd";
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, Locale.US);
+
+        endDateText.setText(sdf.format(cal.getTime()));
 
     }
 
@@ -101,6 +177,46 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.egonzalezh94.testproject/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "Main Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app deep link URI is correct.
+                Uri.parse("android-app://com.example.egonzalezh94.testproject/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
     }
 
     class RetrieveClient extends AsyncTask<Void, Void, String> {
@@ -281,7 +397,7 @@ public class MainActivity extends AppCompatActivity {
              * 2. Where the date is equal or greater than the start date.
              * 3. Where the date is equal or less than the end date.
              */
-            final String filter = String.format("?filter[]=status,eq,0&filter[]=date,ge,%s&filter[]=date,le,%s",dateStart,dateEnd);
+            final String filter = String.format("?filter[]=status,eq,0&filter[]=date,ge,%s&filter[]=date,le,%s", dateStart, dateEnd);
             try {
                 //For now I believe this is insecure since the filter parameter is passed
                 //within the URL and could be manipulated.
@@ -313,7 +429,6 @@ public class MainActivity extends AppCompatActivity {
                 response = "THERE WAS AN ERROR ON RETRIEVECLIENT";
             }
             progressBar.setVisibility(View.GONE);
-
             try {
                 String pastText;
 
@@ -321,7 +436,7 @@ public class MainActivity extends AppCompatActivity {
                 JSONObject appointments = object.getJSONObject("appointments");
                 JSONArray recordsList = appointments.getJSONArray("records");
 
-                for (int i=0;i<recordsList.length();i++) {
+                for (int i = 0; i < recordsList.length(); i++) {
                     JSONArray records = recordsList.getJSONArray(i);
                     String date = records.getString(0);
                     String timeStart = records.getString(1);
@@ -332,7 +447,7 @@ public class MainActivity extends AppCompatActivity {
                      * For now the results are just being printed in order.
                      */
                     pastText = (String) resultBox.getText();
-                    String result = String.format("%s \n Date: %s Start: %s End: %s",pastText,date,timeStart,timeEnd);
+                    String result = String.format("%s \n Date: %s Start: %s End: %s", pastText, date, timeStart, timeEnd);
                     resultBox.setText(result);
                 }
 
