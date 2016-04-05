@@ -34,7 +34,7 @@
           </div>
 
           <div class="col s9">
-            <center><h4>Admin Console</h4></center>
+            <h4>Admin Console</h4>
             <div class="divider"></div>
 
             <h5>Get Schedule<h5>
@@ -70,7 +70,7 @@
                     </div>
                   </div>
 
-                  <button class="btn waves-effect waves-light" onclick="dateFormat()" name="action">Submit
+                  <button class="btn waves-effect waves-light" type="submit" onclick="dateFormat()" name="action">Submit
                     <i class="material-icons right">today</i>
                   </button>
               </form>
@@ -81,8 +81,8 @@
 
             <h5>Get Appointments</h5>
             <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
-                Start date: <input type="date" id="startDate" name="filter[]"><br>
-                End date: <input type="date" id="endDate" name="filter[]"><br>
+                Start date: <input type="date" class="datepicker" id="startDate" name="filter[]"><br>
+                End date: <input type="date" class="datepicker" id="endDate" name="filter[]"><br>
                 <input type="hidden" name="filter[]" value="status,eq,0">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                   <i class="material-icons right">class</i>
@@ -107,12 +107,20 @@
 
         <script>
             function addFilter() {
-                var scheduleStartDate = document.getElementById("startDate").value;
+                var scheduleStartDate = new Date(document.getElementById("startDate").value);
+                scheduleStartDate = scheduleStartDate.getFullYear() + '-' +
+                ('00' + (scheduleStartDate.getMonth()+1)).slice(-2) + '-' +
+                ('00' + scheduleStartDate.getDate()).slice(-2);
+
                 scheduleStartDate = "date,ge," + scheduleStartDate;
                 console.log(scheduleStartDate);
                 document.getElementById("startDate").value = scheduleStartDate;
 
-                var scheduleEndDate = document.getElementById("endDate").value;
+                var scheduleEndDate = new Date(document.getElementById("endDate").value);
+                scheduleEndDate = scheduleEndDate.getFullYear() + '-' +
+                ('00' + (scheduleEndDate.getMonth()+1)).slice(-2) + '-' +
+                ('00' + scheduleEndDate.getDate()).slice(-2);
+
                 scheduleEndDate = "date,le," + scheduleEndDate;
                 document.getElementById("endDate").value = scheduleEndDate;
 
