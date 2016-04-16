@@ -48,7 +48,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.10.34.56/api.php/";
+    static final String API_URL = "http://10.1.83.49/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
 
@@ -460,6 +460,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
     }
+
+
 
 }

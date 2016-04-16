@@ -13,19 +13,19 @@
     tools:context="com.example.egonzalezh94.testproject.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText"
         android:layout_gravity="center_horizontal"
         android:text="When are you available for an appointment?"
-        android:editable="false" />
+        android:inputType="none" />
 
     <EditText
     android:id="@+id/startDateText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:inputType="textEmailAddress"
+    android:inputType="date"
     android:hint="Enter start date yyyy-mm-dd"
         android:focusable="false" />
 
@@ -33,7 +33,7 @@
         android:id="@+id/endDateText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:inputType="date"
         android:hint="Enter end date yyyy-mm-dd"
         android:focusable="false" />
 
@@ -45,13 +45,13 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:text="Search"/>
 
-    <EditText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText2"
         android:layout_gravity="center_horizontal"
         android:text="Available timeslots:"
-        android:editable="false" />
+        android:inputType="none" />
 
     <RelativeLayout
         android:layout_width="match_parent"
