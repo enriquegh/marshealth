@@ -16,7 +16,7 @@
     </head>
     <body>
         <!-- <nav>
-         <div class="nav-wrapper pink lighten-1">
+         <div class="nav-wrapper green darken-1">
            <a href="#" class="brand-logo center">MARS Admin Console</a>
            <ul id="nav-mobile" class="right hide-on-med-and-down">
            </ul>
@@ -27,62 +27,33 @@
             <center><img class="responsive-img" src="img/MARSlogo-wide.png" style="height: 250px;"></center>
           </div>
        </div>
+
        <div class="row">
-          <div class="col s3 collection">
-            <h4>Navigation</h4>
-            <div class="divider"></div>
-            <a href="index.html" class="collection-item active">Home</a>
-            <a href="scheduling.html" class="collection-item">Scheduling</a>
-            <a href="appointment.html" class="collection-item">Appointments</a>
-            <a href="message.html" class="collection-item">Messaging</a>
-            <a href="createUser.html" class="collection-item">Create User</a>
-          </div>
+
+         <div class="col s3 collection">
+           <h4>Navigation</h4>
+           <div class="divider"></div>
+           <a href="index.html" class="collection-item">Home</a>
+           <a href="scheduling.html" class="collection-item">Scheduling</a>
+           <a href="appointment.html" class="collection-item active">Appointments</a>
+           <a href="message.html" class="collection-item">Messaging</a>
+           <a href="createUser.html" class="collection-item">Create User</a>
+         </div>
 
           <div class="col s9">
-            <h4>Home</h4>
+            <h4>Appointments</h4>
             <div class="divider"></div>
 
-            <h5>Get Schedule<h5>
-            <form name="getScheduleForm" action="http://localhost/api.php/schedule" method="get">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Get Schedule
-                <i class="material-icons right">today</i>
-              </button>
-            </form>
-            <br>
-            <div class="divider"></div>
-
-            <h5>Set Schedule</h5>
-
-            <div class="row">
-                  <form name="setScheduleForm" class="col s12" action="http://localhost/api.php/schedule" method="post">
-
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input type="date" class="datepicker" name="date" id="scheduleID">
-                      <label for="scheduleID">Date</label>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="input-field col s6">
-                      <input id="openTime" type="time" class="timepicker" name="timeOpen">
-                      <label for="openTime">Open Time</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                      <input id="closeTime" type="time" class="timepicker" name="timeClose">
-                      <label for="closeTime">Close Time</label>
-                    </div>
-                  </div>
-
-                  <button class="btn waves-effect waves-light" type="submit" onclick="dateFormat()" name="action">Submit
-                    <i class="material-icons right">today</i>
-                  </button>
-              </form>
-            </div>
-
-            <br>
-            <div class="divider"></div>
+            <!-- <h5>Get Appointments</h5>
+            <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
+                Start date: <input type="date" id="startDate" name="filter[]"><br>
+                End date: <input type="date" id="endDate" name="filter[]"><br>
+                <input type="hidden" name="filter[]" value="status,eq,0">
+                <!-- <input type="submit" value="Get Appointments"> -->
+                <!-- <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="material-icons right">class</i>
+                </button>
+            </form> -->
 
             <h5>Get Appointments</h5>
             <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
@@ -103,6 +74,7 @@
                 Date: <input type="date" name="date"><br>
                 Start Time: <input type="time" name="timeStart"><br>
                 End Time: <input type="time" name="timeEnd"><br>
+                <!-- <input type="submit" value="Set Appointment"> -->
                 <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                   <i class="material-icons right">class</i>
                 </button>
@@ -112,20 +84,12 @@
 
         <script>
             function addFilter() {
-                var scheduleStartDate = new Date(document.getElementById("startDate").value);
-                scheduleStartDate = scheduleStartDate.getFullYear() + '-' +
-                ('00' + (scheduleStartDate.getMonth()+1)).slice(-2) + '-' +
-                ('00' + scheduleStartDate.getDate()).slice(-2);
-
+                var scheduleStartDate = document.getElementById("startDate").value;
                 scheduleStartDate = "date,ge," + scheduleStartDate;
                 console.log(scheduleStartDate);
                 document.getElementById("startDate").value = scheduleStartDate;
 
-                var scheduleEndDate = new Date(document.getElementById("endDate").value);
-                scheduleEndDate = scheduleEndDate.getFullYear() + '-' +
-                ('00' + (scheduleEndDate.getMonth()+1)).slice(-2) + '-' +
-                ('00' + scheduleEndDate.getDate()).slice(-2);
-
+                var scheduleEndDate = document.getElementById("endDate").value;
                 scheduleEndDate = "date,le," + scheduleEndDate;
                 document.getElementById("endDate").value = scheduleEndDate;
 
