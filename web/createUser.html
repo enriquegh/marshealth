@@ -1,0 +1,84 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>MARS Health: Admin Console</title>
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="js/picker.js"></script>
+        <script src="js/picker.time.js"></script>
+        <script src="js/legacy.js"></script>
+
+    </head>
+    <body>
+        <!-- <nav>
+         <div class="nav-wrapper pink lighten-1">
+           <a href="#" class="brand-logo center">MARS Admin Console</a>
+           <ul id="nav-mobile" class="right hide-on-med-and-down">
+           </ul>
+         </div>
+       </nav> -->
+       <div class="row">
+          <div class="col s12">
+            <center><img class="responsive-img" src="img/MARSlogo-wide.png" style="height: 250px;"></center>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col s3 collection">
+            <h4>Navigation</h4>
+            <div class="divider"></div>
+            <a href="index.html" class="collection-item">Home</a>
+            <a href="scheduling.html" class="collection-item">Scheduling</a>
+            <a href="appointment.html" class="collection-item">Appointments</a>
+            <a href="message.html" class="collection-item">Messaging</a>
+            <a href="createUser.html" class="collection-item active">Create User</a>
+          </div>
+
+          <div class="col s9">
+            <h4>Create New User</h4>
+            <div class="divider"></div>
+
+            <h5>Registration<h5>
+              <div class="row">
+                <form name="createUser" action="http://localhost/api.php/clients" class="col s12" method="post">
+
+                  <div class="row">
+                    <div class="input-field col s6">
+                      <input name="name" id="first_name" type="text" class="validate">
+                      <label for="first_name">First Name</label>
+                    </div>
+
+                    <div class="input-field col s6">
+                      <input name="l_name" id="last_name" type="text" class="validate">
+                      <label for="last_name">Last Name</label>
+                    </div>
+                  </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input name="pwd" id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input name="email" id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                  </div>
+                </div>
+
+                <button class="btn waves-effect waves-light" type="submit" name="action">Register
+                  <i class="material-icons right">perm_identity</i>
+                </button>
+
+              </form>
+            </div>
+        </div>
+      </div>
+</body>
+</html>

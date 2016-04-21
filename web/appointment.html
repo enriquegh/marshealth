@@ -37,18 +37,29 @@
            <a href="scheduling.html" class="collection-item">Scheduling</a>
            <a href="appointment.html" class="collection-item active">Appointments</a>
            <a href="message.html" class="collection-item">Messaging</a>
+           <a href="createUser.html" class="collection-item">Create User</a>
          </div>
 
           <div class="col s9">
             <h4>Appointments</h4>
             <div class="divider"></div>
 
-            <h5>Get Appointments</h5>
+            <!-- <h5>Get Appointments</h5>
             <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
                 Start date: <input type="date" id="startDate" name="filter[]"><br>
                 End date: <input type="date" id="endDate" name="filter[]"><br>
                 <input type="hidden" name="filter[]" value="status,eq,0">
                 <!-- <input type="submit" value="Get Appointments"> -->
+                <!-- <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="material-icons right">class</i>
+                </button>
+            </form> -->
+
+            <h5>Get Appointments</h5>
+            <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
+                Start date: <input type="date" class="datepicker" id="startDate" name="filter[]"><br>
+                End date: <input type="date" class="datepicker" id="endDate" name="filter[]"><br>
+                <input type="hidden" name="filter[]" value="status,eq,0">
                 <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                   <i class="material-icons right">class</i>
                 </button>
