@@ -52,7 +52,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.1.83.49/api.php/";
+    static final String API_URL = "http://10.1.50.213/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
 
@@ -232,71 +232,6 @@ public class MainActivity extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
-    }
-
-    class RetrieveClient extends AsyncTask<Void, Void, String> {
-
-        private Exception exception;
-        //String name;
-        //RetrieveClient(String name) {
-        //   this.name = name;
-        //}
-
-        protected void onPreExecute() {
-            progressBar.setVisibility(View.VISIBLE);
-            resultBox.setText("");
-        }
-
-        protected String doInBackground(Void... urls) {
-            //String name = nameText.getText().toString();
-            // Do some validation here
-
-            try {
-                URL url = new URL(API_URL + CLIENT_URL);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    return stringBuilder.toString();
-                } finally {
-                    urlConnection.disconnect();
-                }
-            } catch (Exception e) {
-
-                Log.e("ERROR", e.toString(), e);
-
-                return null;
-            }
-        }
-
-        protected void onPostExecute(String response) {
-            if (response == null) {
-                response = "THERE WAS AN ERROR ON RETRIEVECLIENT";
-            }
-            progressBar.setVisibility(View.GONE);
-            Log.i("INFO", response);
-            resultBox.setText(response);
-            // TODO: do something with the feed
-
-//            try {
-//                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-//                String requestID = object.getString("requestId");
-//                int likelihood = object.getInt("likelihood");
-//                JSONArray photos = object.getJSONArray("photos");
-//                .
-//                .
-//                .
-//                .
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-        }
-
     }
 
     class SendClient extends AsyncTask<String, Void, String> {
