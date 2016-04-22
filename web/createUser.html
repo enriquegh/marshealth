@@ -15,30 +15,31 @@
 
     </head>
     <body>
-        <!-- <nav>
-         <div class="nav-wrapper pink lighten-1">
-           <a href="#" class="brand-logo center">MARS Admin Console</a>
-           <ul id="nav-mobile" class="right hide-on-med-and-down">
-           </ul>
-         </div>
-       </nav> -->
-       <div class="row">
-          <div class="col s12">
-            <center><img class="responsive-img" src="img/MARSlogo-wide.png" style="height: 250px;"></center>
-          </div>
-       </div>
-       <div class="row">
-          <div class="col s3 collection">
-            <h4>Navigation</h4>
-            <div class="divider"></div>
-            <a href="index.html" class="collection-item">Home</a>
-            <a href="scheduling.html" class="collection-item">Scheduling</a>
-            <a href="appointment.html" class="collection-item">Appointments</a>
-            <a href="message.html" class="collection-item">Messaging</a>
-            <a href="createUser.html" class="collection-item active">Create User</a>
-          </div>
+          <nav class="blue-grey darken-3">
+            <div class="nav-wrapper container">
+              <a href="index.html" class="brand-logo"><img src="img/MARSicon.png" style="height: 50px; width: 50px;">  MARS Health Admin Console</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="scheduling.html">Scheduling</a></li>
+                <li><a href="appointment.html">Appointments</a></li>
+                <li><a href="message.html">Messaging</a></li>
+                <li class="active"><a href="createUser.html">Create User</a></li>
+              </ul>
 
-          <div class="col s9">
+              <ul id="slide-out" class="side-nav">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="scheduling.html">Scheduling</a></li>
+                <li><a href="appointment.html">Appointments</a></li>
+                <li><a href="message.html">Messaging</a></li>
+                <li><a href="createUser.html">Create User</a></li>
+              </ul>
+
+              <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+            </div>
+          </nav>
+
+          <div class="container">
             <h4>Create New User</h4>
             <div class="divider"></div>
 
@@ -79,6 +80,6 @@
               </form>
             </div>
         </div>
-      </div>
+        <script src="js/format.js"></script>
 </body>
 </html>

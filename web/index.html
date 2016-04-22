@@ -12,145 +12,101 @@
         <script src="js/picker.js"></script>
         <script src="js/picker.time.js"></script>
         <script src="js/legacy.js"></script>
-
+        <link rel="icon" src="img/MARSicon.jpg">
     </head>
     <body>
-        <!-- <nav>
-         <div class="nav-wrapper pink lighten-1">
-           <a href="#" class="brand-logo center">MARS Admin Console</a>
-           <ul id="nav-mobile" class="right hide-on-med-and-down">
-           </ul>
-         </div>
-       </nav> -->
-       <div class="row">
-          <div class="col s12">
-            <center><img class="responsive-img" src="img/MARSlogo-wide.png" style="height: 250px;"></center>
-          </div>
-       </div>
-       <div class="row">
-          <div class="col s3 collection">
-            <h4>Navigation</h4>
-            <div class="divider"></div>
-            <a href="index.html" class="collection-item active">Home</a>
-            <a href="scheduling.html" class="collection-item">Scheduling</a>
-            <a href="appointment.html" class="collection-item">Appointments</a>
-            <a href="message.html" class="collection-item">Messaging</a>
-            <a href="createUser.html" class="collection-item">Create User</a>
-          </div>
+          <nav class="blue-grey darken-3">
+            <div class="nav-wrapper container">
+              <a href="index.html" class="brand-logo"><img src="img/MARSicon.png" style="height: 50px; width: 50px;">  MARS Health Admin Console</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li class="active"><a href="index.html">Home</a></li>
+                <li><a href="scheduling.html">Scheduling</a></li>
+                <li><a href="appointment.html">Appointments</a></li>
+                <li><a href="message.html">Messaging</a></li>
+                <li><a href="createUser.html">Create User</a></li>
+              </ul>
 
-          <div class="col s9">
+              <ul id="slide-out" class="side-nav">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="scheduling.html">Scheduling</a></li>
+                <li><a href="appointment.html">Appointments</a></li>
+                <li><a href="message.html">Messaging</a></li>
+                <li><a href="createUser.html">Create User</a></li>
+              </ul>
+
+              <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+            </div>
+          </nav>
+
+          <div class="parallax-container">
+             <div class="parallax"><img src="img/pexels-photo.jpg"></div>
+           </div>
+
+
+          <div class="container">
             <h4>Home</h4>
             <div class="divider"></div>
 
-            <h5>Get Schedule<h5>
-            <form name="getScheduleForm" action="http://localhost/api.php/schedule" method="get">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Get Schedule
-                <i class="material-icons right">today</i>
-              </button>
-            </form>
-            <br>
-            <div class="divider"></div>
-
-            <h5>Set Schedule</h5>
-
             <div class="row">
-                  <form name="setScheduleForm" class="col s12" action="http://localhost/api.php/schedule" method="post">
+                   <div class="col s6 m6">
+                     <div class="card blue-grey darken-1">
+                       <div class="card-content white-text">
+                         <span class="card-title">Scheduling
+                           <i class="material-icons right">today</i>
+                         </span>
+                         <p>Set the schedule for the office and check what days are currently scheduled.</p>
+                       </div>
+                       <div class="card-action">
+                         <a href="scheduling.html">Go to Scheduling</a>
+                       </div>
+                     </div>
+                   </div>
 
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input type="date" class="datepicker" name="date" id="scheduleID">
-                      <label for="scheduleID">Date</label>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="input-field col s6">
-                      <input id="openTime" type="time" class="timepicker" name="timeOpen">
-                      <label for="openTime">Open Time</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                      <input id="closeTime" type="time" class="timepicker" name="timeClose">
-                      <label for="closeTime">Close Time</label>
-                    </div>
-                  </div>
-
-                  <button class="btn waves-effect waves-light" type="submit" onclick="dateFormat()" name="action">Submit
-                    <i class="material-icons right">today</i>
-                  </button>
-              </form>
+                   <div class="col s6 m6">
+                     <div class="card blue-grey darken-1">
+                       <div class="card-content white-text">
+                         <span class="card-title">Appointments
+                           <i class="material-icons right">class</i>
+                         </span>
+                         <p>See any appointments requested by patients and create appointment slots that patients can register for.</p>
+                       </div>
+                       <div class="card-action">
+                         <a href="appointment.html">Go to Appointments</a>
+                       </div>
+                     </div>
+                   </div>
             </div>
 
-            <br>
-            <div class="divider"></div>
+            <div class="row">
+                   <div class="col s6 m6">
+                     <div class="card blue-grey darken-1">
+                       <div class="card-content white-text">
+                         <span class="card-title">Messaging
+                           <i class="material-icons right">message</i>
+                         </span>
+                         <p>Stay in contact with your patients through our quick and convenient online messaging system.</p>
+                       </div>
+                       <div class="card-action">
+                         <a href="message.html">Go to Messaging</a>
+                       </div>
+                     </div>
+                   </div>
 
-            <h5>Get Appointments</h5>
-            <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
-                Start date: <input type="date" class="datepicker" id="startDate" name="filter[]"><br>
-                End date: <input type="date" class="datepicker" id="endDate" name="filter[]"><br>
-                <input type="hidden" name="filter[]" value="status,eq,0">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                  <i class="material-icons right">class</i>
-                </button>
-            </form>
-
-            <br>
-            <div class="divider"></div>
-
-            <h5>Set Appointments</h5>
-
-            <form name="setAppointmentsForm" action="http://localhost/api.php/appointments" method="post">
-                Date: <input type="date" name="date"><br>
-                Start Time: <input type="time" name="timeStart"><br>
-                End Time: <input type="time" name="timeEnd"><br>
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                  <i class="material-icons right">class</i>
-                </button>
-            </form>
+                   <div class="col s6 m6">
+                     <div class="card blue-grey darken-1">
+                       <div class="card-content white-text">
+                         <span class="card-title">Register User
+                           <i class="material-icons right">perm_identity</i>
+                         </span>
+                         <p>New patients? Register any new patients here using our online registration form.</p>
+                       </div>
+                       <div class="card-action">
+                         <a href="createUser.html">Go to Registration</a>
+                       </div>
+                     </div>
+             </div>
           </div>
-      </div>
-
-        <script>
-            function addFilter() {
-                var scheduleStartDate = new Date(document.getElementById("startDate").value);
-                scheduleStartDate = scheduleStartDate.getFullYear() + '-' +
-                ('00' + (scheduleStartDate.getMonth()+1)).slice(-2) + '-' +
-                ('00' + scheduleStartDate.getDate()).slice(-2);
-
-                scheduleStartDate = "date,ge," + scheduleStartDate;
-                console.log(scheduleStartDate);
-                document.getElementById("startDate").value = scheduleStartDate;
-
-                var scheduleEndDate = new Date(document.getElementById("endDate").value);
-                scheduleEndDate = scheduleEndDate.getFullYear() + '-' +
-                ('00' + (scheduleEndDate.getMonth()+1)).slice(-2) + '-' +
-                ('00' + scheduleEndDate.getDate()).slice(-2);
-
-                scheduleEndDate = "date,le," + scheduleEndDate;
-                document.getElementById("endDate").value = scheduleEndDate;
-
-                return false;
-            }
-
-            function dateFormat() {
-              var date = new Date(document.getElementById("scheduleID").value);
-
-              date = date.getFullYear() + '-' +
-              ('00' + (date.getMonth()+1)).slice(-2) + '-' +
-              ('00' + date.getDate()).slice(-2);
-
-              console.log(date);
-              document.getElementById("scheduleID").value = date;
-            }
-
-            $('.datepicker').pickadate({
-              selectMonths: true, // Creates a dropdown to control month
-              selectYears: 15 // Creates a dropdown of 15 years to control year
-            });
-
-            $('.timepicker').pickatime();
-
-
-        </script>
-    </body>
+        <script src="js/format.js"></script>
+  </body>
 </html>
