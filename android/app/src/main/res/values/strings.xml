@@ -1,10 +1,4 @@
 <resources>
-    <string name="app_name">Test Project</string>
+    <string name="app_name">MARS Health</string>
     <string name="action_settings">Settings</string>
-    <string-array name="status_array">
-        <item>Student</item>
-        <item>Faculty</item>
-        <item>Staff</item>
-        <item>Alumni</item>
-    </string-array>
 </resources>
