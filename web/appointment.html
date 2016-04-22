@@ -1,0 +1,85 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>MARS Health: Admin Console</title>
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="js/picker.js"></script>
+        <script src="js/picker.time.js"></script>
+        <script src="js/legacy.js"></script>
+
+    </head>
+    <body>
+          <nav class="blue-grey darken-3">
+            <div class="nav-wrapper container">
+              <a href="index.html" class="brand-logo"><img src="img/MARSicon.png" style="height: 50px; width: 50px;">  MARS Health Admin Console</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="scheduling.html">Scheduling</a></li>
+                <li class="active"><a href="appointment.html">Appointments</a></li>
+                <li><a href="message.html">Messaging</a></li>
+                <li><a href="createUser.html">Create User</a></li>
+              </ul>
+
+              <ul id="slide-out" class="side-nav">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="scheduling.html">Scheduling</a></li>
+                <li><a href="appointment.html">Appointments</a></li>
+                <li><a href="message.html">Messaging</a></li>
+                <li><a href="createUser.html">Create User</a></li>
+              </ul>
+
+              <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+            </div>
+          </nav>
+
+          <div class="container">
+            <h4>Appointments</h4>
+            <div class="divider"></div>
+
+            <!-- <h5>Get Appointments</h5>
+            <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
+                Start date: <input type="date" id="startDate" name="filter[]"><br>
+                End date: <input type="date" id="endDate" name="filter[]"><br>
+                <input type="hidden" name="filter[]" value="status,eq,0">
+                <!-- <input type="submit" value="Get Appointments"> -->
+                <!-- <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="material-icons right">class</i>
+                </button>
+            </form> -->
+
+            <h5>Get Appointments</h5>
+            <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
+                Start date: <input type="date" class="datepicker" id="startDate" name="filter[]"><br>
+                End date: <input type="date" class="datepicker" id="endDate" name="filter[]"><br>
+                <input type="hidden" name="filter[]" value="status,eq,0">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="material-icons right">class</i>
+                </button>
+            </form>
+
+            <br>
+            <div class="divider"></div>
+
+            <h5>Set Appointments</h5>
+
+            <form name="setAppointmentsForm" action="http://localhost/api.php/appointments" method="post">
+                Date: <input type="date" name="date"><br>
+                Start Time: <input type="time" name="timeStart"><br>
+                End Time: <input type="time" name="timeEnd"><br>
+                <!-- <input type="submit" value="Set Appointment"> -->
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                  <i class="material-icons right">class</i>
+                </button>
+            </form>
+          </div>
+      </div>
+      <script src="js/format.js"></script>
+    </body>
+</html>
