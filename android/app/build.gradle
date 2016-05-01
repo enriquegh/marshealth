@@ -25,4 +25,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+    compile files('/Users/egonzalezh94/git/medical-mobile-app/android/libs/sinch-android-rtc-3.9.3.jar')
+    compile files('/Users/egonzalezh94/git/medical-mobile-app/android/libs/sinch-android-rtc-3.9.3-javadoc.jar')
+    compile files('libs/sinch-android-rtc-3.9.3.jar')
 }
