@@ -3,8 +3,10 @@ package com.example.egonzalezh94.testproject;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -49,7 +51,8 @@ public class MessagingActivity extends AppCompatActivity {
 
         //get recipientId from the intent
         mTxtRecipient = (EditText) findViewById(R.id.txtRecipient);
-        currentUserId = "egonzalezh94"; //ParseUser.getCurrentUser().getObjectId();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        currentUserId = prefs.getString("username","DEFAULT_NO");
 
         messageBodyField = (EditText) findViewById(R.id.txtTextBody);
 

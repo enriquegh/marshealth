@@ -57,7 +57,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://192.168.1.149/api.php/";
+    static final String API_URL = "http://192.168.1.253/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
     private ProgressDialog progressDialog;
@@ -171,6 +171,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onDestroy() {
+        stopService(new Intent(this, MessageService.class));
+        super.onDestroy();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -187,9 +194,13 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            String currentUserId = prefs.getString("username",null);
+            Log.d("currentUserIDMain",currentUserId);
+
             Intent intent = new Intent(this, MessagingActivity.class);
             //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("RECIPIENT_ID", "egonzalezh94");
+            intent.putExtra("RECIPIENT_ID", currentUserId);
             startActivity(intent);
             //finish();
             return true;

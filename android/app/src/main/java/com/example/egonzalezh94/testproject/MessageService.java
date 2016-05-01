@@ -2,8 +2,10 @@ package com.example.egonzalezh94.testproject;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -27,7 +29,7 @@ public class MessageService extends Service implements SinchClientListener {
     private final MessageServiceInterface serviceInterface = new MessageServiceInterface();
     private SinchClient sinchClient = null;
     private MessageClient messageClient;
-    private String currentUserId;
+    private String currentUserId = null;
 
     private LocalBroadcastManager broadcaster;
     private Intent broadcastIntent = new Intent("com.example.egonzalezh94.testproject.MainActivity");
@@ -35,7 +37,9 @@ public class MessageService extends Service implements SinchClientListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //get the current user id from Parse
-        currentUserId = "egonzalezh94";//ParseUser.getCurrentUser().getObjectId();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        currentUserId = prefs.getString("username","DEFAULT_NO");
+        Log.d("currentUserIDMessServ",currentUserId);
         if (currentUserId != null && !isSinchClientStarted()) {
             startSinchClient(currentUserId);
         }
@@ -119,8 +123,11 @@ public class MessageService extends Service implements SinchClientListener {
     }
     @Override
     public void onDestroy() {
-        sinchClient.stopListeningOnActiveConnection();
-        sinchClient.terminate();
+        if (sinchClient != null) {
+            sinchClient.stopListeningOnActiveConnection();
+            sinchClient.terminate();
+        }
+
     }
     //public interface for ListUsersActivity & MessagingActivity
     public class MessageServiceInterface extends Binder {

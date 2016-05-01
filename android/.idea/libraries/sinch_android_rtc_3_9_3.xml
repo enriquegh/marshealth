@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sinch-android-rtc-3.9.3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/app/libs/sinch-android-rtc-3.9.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
