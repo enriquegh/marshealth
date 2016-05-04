@@ -31,7 +31,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.1.50.213/api.php/";
+    static final String API_URL = "http://10.1.103.62/api.php/";
     static final String CLIENT_URL = "clients";
     EditText email;
     EditText password;
