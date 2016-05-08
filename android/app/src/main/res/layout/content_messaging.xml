@@ -4,42 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
     tools:context="com.example.egonzalezh94.testproject.MessagingActivity"
     tools:showIn="@layout/activity_messaging">
 
-    <EditText
-        android:id="@+id/messageTo"
+
+    <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="Type username"/>
-
-    <EditText
-        android:id="@+id/messageBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textLongMessage"
-        android:hint="Message"/>
-
-    <Button
-        android:id="@+id/sendMessageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:text="Send"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/messagesReceived"
+        android:id="@+id/listRecipient"
         android:layout_gravity="center_horizontal"
-        android:inputType="none" />
+        android:spinnerMode="dropdown" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="387dp"
+        android:id="@+id/lstMessages"
+        android:transcriptMode="alwaysScroll"
+        android:background="@drawable/bg_shadow"
+        android:layout_alignTop="@+id/txtTextBody"
+        android:layout_alignRight="@+id/btnSend"
+        android:layout_alignEnd="@+id/btnSend"
+        android:dividerHeight="0dp" android:stackFromBottom="true" tools:listitem="@layout/message_left"/>
+
+    <RelativeLayout
+        android:id="@+id/relSendMessage"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@android:color/white" >
+
+
+        <EditText
+            android:layout_marginBottom="-4dp"
+            android:id="@+id/txtTextBody"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Message..."
+            android:textSize="14sp"
+            android:textColor="@color/dark_gray"
+            android:layout_marginRight="10dp"
+            android:layout_alignTop="@+id/btnSend"
+            android:background="@android:color/white"
+            android:layout_alignBottom="@+id/btnSend"
+            android:layout_toLeftOf="@+id/btnSend"/>
+
+
+
+        <Button
+            android:id="@+id/btnSend"
+            android:layout_width="72dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_margin="4dp"
+            android:background="@drawable/button_send" />
+
+    </RelativeLayout>
 
 </LinearLayout>

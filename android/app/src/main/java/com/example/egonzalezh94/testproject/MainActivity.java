@@ -57,7 +57,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://192.168.1.253/api.php/";
+    static final String API_URL = "http://10.1.68.90/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
     private ProgressDialog progressDialog;
