@@ -148,6 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     startService(serviceIntent);
 
+
                     finish();
 
 

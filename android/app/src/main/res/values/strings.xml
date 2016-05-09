@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MARS Health</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_messaging">MessagingActivity</string>
+    <string name="message_elipses">Message...</string>
+
 </resources>
