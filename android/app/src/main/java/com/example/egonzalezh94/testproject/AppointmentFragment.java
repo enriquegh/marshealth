@@ -1,46 +1,22 @@
 package com.example.egonzalezh94.testproject;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.app.TimePickerDialog;
 import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 //import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.CalendarView;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
@@ -51,24 +27,21 @@ import org.json.JSONTokener;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 
 //import info.androidhive.materialtabs.R;
 
-public class OneFragment extends Fragment {
+public class AppointmentFragment extends Fragment {
 
     static final String API_URL = "http://10.10.34.148/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
+
     private ProgressDialog progressDialog;
     private BroadcastReceiver receiver = null;
 
@@ -90,7 +63,7 @@ public class OneFragment extends Fragment {
      */
     private GoogleApiClient client;
 
-    public OneFragment() {
+    public AppointmentFragment() {
         // Required empty public constructor
     }
 
@@ -102,27 +75,11 @@ public class OneFragment extends Fragment {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
-/*    class DatePickerFragment extends DialogFragment{
-        private DatePickerDialog.OnDateSetListener dateSetListener; // listener object to get calling fragment listener
-        DatePickerDialog myDatePicker;
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            dateSetListener = (DatePickerDialog.OnDateSetListener)getTargetFragment(); // getting passed fragment
-            myDatePicker = new DatePickerDialog(getActivity(), dateSetListener, year, month, day); // DatePickerDialog gets callBack listener as 2nd parameter
-            // Create a new instance of DatePickerDialog and return it
-            return myDatePicker;
-        }
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
-        view = inflater.inflate(R.layout.fragment_one, container, false); // inflating the layout
+        view = inflater.inflate(R.layout.fragment_appointments, container, false); // inflating the layout
 
         startDateText = (EditText) view.findViewById(R.id.startDateText);
         endDateText = (EditText) view.findViewById(R.id.endDateText);

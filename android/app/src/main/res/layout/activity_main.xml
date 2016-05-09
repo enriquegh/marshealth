@@ -81,7 +81,7 @@
 
     <!--<fragment-->
         <!--android:id="@+id/childFragment"-->
-        <!--android:name="com.example.egonzalezh94.testproject.OneFragment"-->
+        <!--android:name="com.example.egonzalezh94.testproject.AppointmentFragmentFragment"-->
         <!--android:layout_height="fill_parent"-->
         <!--android:layout_width="match_parent" />-->
 

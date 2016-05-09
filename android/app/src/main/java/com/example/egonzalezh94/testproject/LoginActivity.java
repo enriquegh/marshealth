@@ -52,8 +52,10 @@ public class LoginActivity extends AppCompatActivity {
 
         if(isLogin) {
             Intent intent = new Intent(this, MainActivity.class);
+            Intent serviceIntent = new Intent(getApplicationContext(), MessageService.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
+            startService(serviceIntent);
             finish();
         }
 
@@ -66,6 +68,12 @@ public class LoginActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
     }
 
     class CheckClient extends AsyncTask<Object, Void, String> {
@@ -121,6 +129,8 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONObject clients = object.getJSONObject("clients");
                 JSONArray recordsList = clients.getJSONArray("records");
+                String username = recordsList.getJSONArray(0).get(3).toString();
+
 
                 if (recordsList.length() == 0) {
                     TextView tv = (TextView) findViewById(R.id.loginText);
@@ -131,9 +141,13 @@ public class LoginActivity extends AppCompatActivity {
                     //Result should be valid
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
                     prefs.edit().putBoolean("isLogin", true).apply(); // isLogin is a boolean value of your login status
+                    prefs.edit().putString("username", username).apply();
                     Intent intent = new Intent(context, MainActivity.class);
+                    Intent serviceIntent = new Intent(context, MessageService.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    startService(serviceIntent);
+
                     finish();
 
 
