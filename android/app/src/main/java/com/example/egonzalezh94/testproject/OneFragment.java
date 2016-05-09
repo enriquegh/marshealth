@@ -3,7 +3,9 @@ package com.example.egonzalezh94.testproject;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +23,7 @@ import android.text.format.DateFormat;
 import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,11 +64,13 @@ import java.util.Locale;
 
 //import info.androidhive.materialtabs.R;
 
-public class OneFragment extends Fragment {//implements DatePickerDialog.OnDateSetListener {
+public class OneFragment extends Fragment {
 
-    static final String API_URL = "http://192.168.1.105/api.php/";
+    static final String API_URL = "http://10.10.34.148/api.php/";
     static final String CLIENT_URL = "clients2";
     static final String APPOINTMENT_URL = "appointments";
+    private ProgressDialog progressDialog;
+    private BroadcastReceiver receiver = null;
 
     EditText startDateText;
     EditText endDateText;
@@ -78,8 +83,6 @@ public class OneFragment extends Fragment {//implements DatePickerDialog.OnDateS
     String startDate;
     String endDate;
 
-//    ImageButton selectDate;
-    TextView dateToActivate;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -97,10 +100,9 @@ public class OneFragment extends Fragment {//implements DatePickerDialog.OnDateS
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(getContext()).addApi(AppIndex.API).build();
     }
 
-    class DatePickerFragment extends DialogFragment{
+/*    class DatePickerFragment extends DialogFragment{
         private DatePickerDialog.OnDateSetListener dateSetListener; // listener object to get calling fragment listener
         DatePickerDialog myDatePicker;
         @Override
@@ -115,7 +117,7 @@ public class OneFragment extends Fragment {//implements DatePickerDialog.OnDateS
             // Create a new instance of DatePickerDialog and return it
             return myDatePicker;
         }
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -158,28 +160,9 @@ public class OneFragment extends Fragment {//implements DatePickerDialog.OnDateS
             }
         });
 
-
-//        startDateText.setOnClickListener(new View.OnClickListener() {  // setting listener for user click event
-//            @Override
-//            public void onClick(View v) {
-//                DialogFragment newFragment = new DatePickerFragment(); // creating DialogFragment which creates DatePickerDialog
-//                newFragment.setTargetFragment(OneFragment.this,0);  // Passing this fragment DatePickerFragment.
-//                // As i figured out this is the best way to keep the reference to calling activity when using FRAGMENT.
-//                newFragment.show(getActivity().getFragmentManager(), "datePicker");
-//            }
-//        });
         return view;
 
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_one, container, false);
     }
-
-//    @Override
-//    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) { // what should be done when a date is selected
-//        StringBuilder sb = new StringBuilder().append(dayOfMonth).append("/").append(monthOfYear + 1);
-//        String formattedDate = sb.toString();
-//        dateToActivate.setText(formattedDate);
-//    }
 
     // Global listeners for startDate and endDate EditText objeects
     DatePickerDialog.OnDateSetListener startListener = new DatePickerDialog.OnDateSetListener() {
@@ -222,77 +205,6 @@ public class OneFragment extends Fragment {//implements DatePickerDialog.OnDateS
 
     }
 
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.logout) {
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-            prefs.edit().putBoolean("isLogin", false).apply();
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.egonzalezh94.testproject/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Main Page", // TODO: Define a title for the content shown.
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app deep link URI is correct.
-                Uri.parse("android-app://com.example.egonzalezh94.testproject/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
-    }
 
     class SendClient extends AsyncTask<String, Void, String> {
         String name;
