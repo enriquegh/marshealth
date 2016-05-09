@@ -44,9 +44,7 @@
             <div class="divider"></div>
 
             <h5>Registration<h5>
-              <div class="row">
-                <form name="createUser" action="http://localhost/api.php/clients" class="col s12" method="post">
-
+                <form>
                   <div class="row">
                     <div class="input-field col s6">
                       <input name="name" id="first_name" type="text" class="validate">
@@ -59,27 +57,29 @@
                     </div>
                   </div>
 
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input name="pwd" id="password" type="password" class="validate">
-                    <label for="password">Password</label>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input name="pwd" id="password" type="password" class="validate">
+                      <label for="password">Password</label>
+                    </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input name="email" id="email" type="email" class="validate">
-                    <label for="email">Email</label>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input name="email" id="email" type="email" class="validate">
+                      <label for="email">Email</label>
+                    </div>
                   </div>
-                </div>
 
-                <button class="btn waves-effect waves-light" type="submit" name="action">Register
-                  <i class="material-icons right">perm_identity</i>
-                </button>
-
+                  <div class="container">
+                    <center><a class="waves-effect waves-light btn" onclick="registerUser()">REGISTER
+                        <i class="material-icons right">perm_identity</i></a>
+                    </center>
+                  </div>
               </form>
-            </div>
+
         </div>
         <script src="js/format.js"></script>
+        <script src="js/registration.js"></script>
 </body>
 </html>

@@ -43,85 +43,64 @@
             <h4>Appointments</h4>
             <div class="divider"></div>
 
-            <!-- <h5>Get Appointments</h5>
-            <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="addFilter()">
-                Start date: <input type="date" id="startDate" name="filter[]"><br>
-                End date: <input type="date" id="endDate" name="filter[]"><br>
-                <input type="hidden" name="filter[]" value="status,eq,0">
-                <!-- <input type="submit" value="Get Appointments"> -->
-                <!-- <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                  <i class="material-icons right">class</i>
-                </button>
-            </form> -->
-
             <h5>Get Appointments</h5>
-            <form name="getAppointmentsForm" action="http://localhost/api.php/appointments" method="get" onsubmit="getApptFilter()">
+            <div class="container appointments"></div>
 
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input type="date" class="datepicker" id="startDate" name="filter[]">
-                    <label for="startDate">Start Date</label>
-                  </div>
-                </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input type="date" class="datepicker" id="startDate" name="filter[]">
+                <label for="startDate">Start Date</label>
+              </div>
 
-                <div class="row">
-                  <div class="input-field col s12">
-                    <input type="date" class="datepicker" id="endDate" name="filter[]">
-                    <label for="endDate">End Date</label>
-                  </div>
-                </div>
+              <div class="input-field col s6">
+                <input type="date" class="datepicker" id="endDate" name="filter[]">
+                <label for="endDate">End Date</label>
+              </div>
+            </div>
 
-                <input type="hidden" name="filter[]" value="status,eq,0">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                  <i class="material-icons right">class</i>
-                </button>
-            </form>
+            <div class="row">
+              <div class="input-field col s12">
+                <select id="dropdown">
+                  <option value="0">Available</option>
+                  <option value="1">Not Confirmed</option>
+                  <option value="2">Confirmed</option>
+                  <option value="3">Cancelled</option>
+                </select>
+                <label>Filter By:</label>
+              </div>
+            </div>
 
-            <br>
+            <a class="waves-effect waves-light btn" onclick="getAppointment()">Get Appointments                    <i class="material-icons right">class</i></a>
+
+            <br><br>
             <div class="divider"></div>
 
             <h5>Set Appointments</h5>
 
-            <!-- <form name="setAppointmentsForm" action="http://localhost/api.php/appointments" method="post" onsubmit="setApptFilter()">
-                Date: <input type="date" name="date"><br>
-                Start Time: <input type="time" name="timeStart"><br>
-                End Time: <input type="time" name="timeEnd"><br>
-                <!-- <input type="submit" value="Set Appointment"> -->
-                <!-- <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                  <i class="material-icons right">class</i>
-                </button>
-            </form> -->
+              <div class="row">
+                <div class="input-field col s12">
+                  <input type="date" class="datepicker" name="date" id="apptDate">
+                  <label for="apptDate">Date</label>
+                </div>
+              </div>
 
-            <div class="row">
-                  <form name="setAppointmentsForm" class="col s12" action="http://localhost/api.php/appointments" method="post" onsubmit="setApptFilter()">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="startTime" type="time" class="timepicker" name="timeStart">
+                  <label for="startTime">Start Time</label>
+                </div>
 
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input type="date" class="datepicker" name="date" id="apptDate">
-                      <label for="scheduleID">Date</label>
-                    </div>
-                  </div>
+                <div class="input-field col s6">
+                  <input id="endTime" type="time" class="timepicker" name="timeEnd">
+                  <label for="endTime">End Time</label>
+                </div>
+              </div>
 
-                  <div class="row">
-                    <div class="input-field col s6">
-                      <input id="startTime" type="time" class="timepicker" name="timeStart">
-                      <label for="openTime">Start Time</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                      <input id="endTime" type="time" class="timepicker" name="timeEnd">
-                      <label for="closeTime">End Time</label>
-                    </div>
-                  </div>
-
-                  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                    <i class="material-icons right">class</i>
-                  </button>
-              </form>
-            </div>
+              <a class="waves-effect waves-light btn" onclick="setAppointment()">Create Appointment                    <i class="material-icons right">class</i></a>
 
           </div>
       </div>
       <script src="js/format.js"></script>
+      <script src="js/appointment.js"></script>
     </body>
 </html>

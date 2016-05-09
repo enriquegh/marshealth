@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>MARS Health: Admin Console</title>
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <script src="js/picker.js"></script>
+        <script src="js/picker.time.js"></script>
+        <script src="js/legacy.js"></script>
+        <link rel="icon" src="img/MARSicon.jpg">
+        <style>
+          body {
+            background-color: #37474f
+          }
+
+          img {
+            padding-top: 50px
+          }
+
+          .loginBox {
+            border-radius: 10px
+          }
+        </style>
+    </head>
+    <body>
+
+          <div class="container blue-grey darken-3">
+            <center>
+                <img src="img/MARSicon.png" height="200px">
+                <h2 class="white-text">MARS Health: Admin Console</h2>
+            </center>
+          </div>
+
+          <div class="container white loginBox">
+              <div class="container">
+                  <form name="loginForm" action="http://localhost/api.php/staff" method="get">
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input name="username" id="username" type="email" class="validate">
+                          <label for="username">Username</label>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <input name="pwd" id="pwd" type="password" class="validate">
+                          <label for="pwd">Password</label>
+                        </div>
+                      </div>
+
+                      <center>
+                      <button class="btn waves-effect waves-light" type="submit" name="action" onclick="setSchedFilter()">Login
+                        <i class="material-icons right">perm_identity</i>
+                      </button>
+                      </center>
+                  </form>
+                  <br>
+                </div>
+          </div>
+        <script src="js/login.js"></script>
+        <script src="js/format.js"></script>
+  </body>
+</html>

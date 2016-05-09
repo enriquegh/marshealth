@@ -15,75 +15,67 @@
 
     </head>
     <body>
-      <nav class="blue-grey darken-3">
-        <div class="nav-wrapper container">
-          <a href="index.html" class="brand-logo"><img src="img/MARSicon.png" style="height: 50px; width: 50px;">  MARS Health Admin Console</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="index.html">Home</a></li>
-            <li class="active"><a href="scheduling.html">Scheduling</a></li>
-            <li><a href="appointment.html">Appointments</a></li>
-            <li><a href="message.html">Messaging</a></li>
-            <li><a href="createUser.html">Create User</a></li>
-          </ul>
+        <nav class="blue-grey darken-3">
+          <div class="nav-wrapper container">
+            <a href="index.html" class="brand-logo"><img src="img/MARSicon.png" style="height: 50px; width: 50px;">  MARS Health Admin Console</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="index.html">Home</a></li>
+              <li class="active"><a href="scheduling.html">Scheduling</a></li>
+              <li><a href="appointment.html">Appointments</a></li>
+              <li><a href="message.html">Messaging</a></li>
+              <li><a href="createUser.html">Create User</a></li>
+            </ul>
 
-          <ul id="slide-out" class="side-nav">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="scheduling.html">Scheduling</a></li>
-            <li><a href="appointment.html">Appointments</a></li>
-            <li><a href="message.html">Messaging</a></li>
-            <li><a href="createUser.html">Create User</a></li>
-          </ul>
+            <ul id="slide-out" class="side-nav">
+              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="scheduling.html">Scheduling</a></li>
+              <li><a href="appointment.html">Appointments</a></li>
+              <li><a href="message.html">Messaging</a></li>
+              <li><a href="createUser.html">Create User</a></li>
+            </ul>
 
-          <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 
-        </div>
-      </nav>
-
+          </div>
+        </nav>
       <div class="container">
-            <h4>Scheduling</h4>
-            <div class="divider"></div>
+        <h4>Scheduling</h4>
+        <div class="divider"></div>
 
-            <h5>Get Schedule<h5>
-            <form name="getScheduleForm" action="http://localhost/api.php/schedule" method="get">
-              <button class="btn waves-effect waves-light" type="submit" name="action">Get Schedule
-                <i class="material-icons right">today</i>
-              </button>
-            </form>
+        <h5>Get Schedule</h5>
 
-            <br>
-            <div class="divider"></div>
+        <div class="container schedule"></div>
+        <center><a class="waves-effect waves-light btn" onclick="getSchedule()">Get Schedule</a></center>
 
-            <h5>Set Schedule</h5>
+        <br>
+        <div class="divider"></div>
 
-            <div class="row">
-                  <form name="setScheduleForm" class="col s12" action="http://localhost/api.php/schedule" method="post">
+        <h5>Set Schedule</h5>
 
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input type="date" class="datepicker" name="date" id="scheduleID">
-                      <label for="scheduleID">Date</label>
-                    </div>
-                  </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input type="date" class="datepicker" name="date" id="scheduleID">
+            <label for="scheduleID">Date</label>
+          </div>
+        </div>
 
-                  <div class="row">
-                    <div class="input-field col s6">
-                      <input id="openTime" type="time" class="timepicker" name="timeOpen">
-                      <label for="openTime">Open Time</label>
-                    </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="openTime" type="time" class="timepicker" name="timeOpen">
+            <label for="openTime">Open Time</label>
+          </div>
 
-                    <div class="input-field col s6">
-                      <input id="closeTime" type="time" class="timepicker" name="timeClose">
-                      <label for="closeTime">Close Time</label>
-                    </div>
-                  </div>
+          <div class="input-field col s6">
+            <input id="closeTime" type="time" class="timepicker" name="timeClose">
+            <label for="closeTime">Close Time</label>
+          </div>
+        </div>
 
-                  <button class="btn waves-effect waves-light" type="submit" name="action" onclick="setSchedFilter()">Submit
-                    <i class="material-icons right">today</i>
-                  </button>
-              </form>
-            </div>
+        <center><a class="waves-effect waves-light btn" onclick="setSchedule()">Set Schedule</a></center>
       </div>
 
       <script src="js/format.js"></script>
+      <script src="js/schedule.js"></script>
+
     </body>
 </html>
