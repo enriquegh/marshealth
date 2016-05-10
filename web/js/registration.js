@@ -4,7 +4,7 @@ function registerUser() {
   var password = document.getElementById("password").value;
   var emailAddress = document.getElementById("email").value;
 
-  $.post("http://localhost/api.php/clients",
+  $.post("api.php/clients",
       { name: firstName, l_name: lastName, email: emailAddress, pwd: password },
       function() {
         Materialize.toast('New user registered!', 4000);

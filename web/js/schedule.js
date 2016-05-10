@@ -1,7 +1,7 @@
 function getSchedule() {
     $(".scheduleTable").remove();
 
-    $.getJSON("http://localhost/api.php/schedule", function(data) {
+    $.getJSON("api.php/schedule", function(data) {
         console.log(data);
         var table = "<table class='scheduleTable centered'><thead><tr><th data-field='date'>Date</th><th data-field='openTime'>Open Time</th><th data-field='closeTime'>Close Time</th></tr></thead><tbody>"
 
@@ -30,7 +30,7 @@ function setSchedule() {
   var open = convertTime(openTime);
   var close = convertTime(closeTime);
 
-  $.post("http://localhost/api.php/schedule",
+  $.post("api.php/schedule",
       { date: scheduleDate, timeOpen: open, timeClose: close },
       function() {
         Materialize.toast('Schedule created!', 4000);

@@ -38,27 +38,22 @@
 
           <div class="container white loginBox">
               <div class="container">
-                  <form name="loginForm" action="http://localhost/api.php/staff" method="get">
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input name="username" id="username" type="email" class="validate">
-                          <label for="username">Username</label>
-                        </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input name="username" id="username" type="text" class="validate">
+                        <label for="username">Username</label>
                       </div>
+                    </div>
 
-                      <div class="row">
-                        <div class="input-field col s12">
-                          <input name="pwd" id="pwd" type="password" class="validate">
-                          <label for="pwd">Password</label>
-                        </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input name="pwd" id="pwd" type="password" class="validate">
+                        <label for="pwd">Password</label>
                       </div>
+                    </div>
 
-                      <center>
-                      <button class="btn waves-effect waves-light" type="submit" name="action" onclick="setSchedFilter()">Login
-                        <i class="material-icons right">perm_identity</i>
-                      </button>
-                      </center>
-                  </form>
+                    <center><a class="waves-effect waves-light btn" onclick="validateLogin()">Login</a></center>
+
                   <br>
                 </div>
           </div>
