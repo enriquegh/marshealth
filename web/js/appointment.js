@@ -9,7 +9,7 @@ function getAppointment() {
 
     var filter = document.getElementById("dropdown").value;
 
-    var url = "api.php/appointments?";
+    var url = "../api.php/appointments?";
     url += "filter[]=" + scheduleStartDate + "&";
     url += "filter[]=" + scheduleEndDate + "&";
     url += "filter[]=status,eq," + filter;
@@ -43,7 +43,7 @@ function setAppointment() {
   var start = convertTime(startTime);
   var end = convertTime(endTime);
 
-  $.post("api.php/appointments",
+  $.post("../api.php/appointments",
       { date: appointmentDate, timeStart: start, timeEnd: end },
       function() {
         Materialize.toast('Appointment created!', 4000);
