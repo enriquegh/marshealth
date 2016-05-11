@@ -43,60 +43,70 @@
             <h4>Appointments</h4>
             <div class="divider"></div>
 
-            <h5>Get Appointments</h5>
-            <div class="container appointments"></div>
-
-            <div class="row">
-              <div class="input-field col s6">
-                <input type="date" class="datepicker" id="startDate" name="filter[]">
-                <label for="startDate">Start Date</label>
-              </div>
-
-              <div class="input-field col s6">
-                <input type="date" class="datepicker" id="endDate" name="filter[]">
-                <label for="endDate">End Date</label>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="input-field col s12">
-                <select id="dropdown">
-                  <option value="0">Available</option>
-                  <option value="1">Not Confirmed</option>
-                  <option value="2">Confirmed</option>
-                  <option value="3">Cancelled</option>
-                </select>
-                <label>Filter By:</label>
-              </div>
-            </div>
-
-            <a class="waves-effect waves-light btn" onclick="getAppointment()">Get Appointments                    <i class="material-icons right">class</i></a>
-
-            <br><br>
-            <div class="divider"></div>
-
-            <h5>Set Appointments</h5>
+            <h5>Schedule Appointments</h5>
 
               <div class="row">
-                <div class="input-field col s12">
-                  <input type="date" class="datepicker" name="date" id="apptDate">
-                  <label for="apptDate">Date</label>
+                <div class="input-field col s6">
+                  <input name="name" id="first_name" type="text" class="validate">
+                  <label for="first_name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input name="l_name" id="last_name" type="text" class="validate">
+                  <label for="last_name">Last Name</label>
                 </div>
               </div>
 
               <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s4">
+                  <input type="date" class="datepicker" name="date" id="apptDate">
+                  <label for="apptDate">Date</label>
+                </div>
+
+                <div class="input-field col s4">
                   <input id="startTime" type="time" class="timepicker" name="timeStart">
                   <label for="startTime">Start Time</label>
                 </div>
 
-                <div class="input-field col s6">
+                <div class="input-field col s4">
                   <input id="endTime" type="time" class="timepicker" name="timeEnd">
                   <label for="endTime">End Time</label>
                 </div>
               </div>
 
-              <a class="waves-effect waves-light btn" onclick="setAppointment()">Create Appointment                    <i class="material-icons right">class</i></a>
+              <a class="waves-effect waves-light btn" onclick="scheduleAppointment()">Create Appointment                    <i class="material-icons right">class</i></a>
+
+            <br><br>
+            <div class="divider"></div>
+
+              <h5>Get Appointments</h5>
+
+              <div class="row">
+                <div class="input-field col s6">
+                  <input type="date" class="datepicker" id="startDate" name="filter[]">
+                  <label for="startDate">Start Date</label>
+                </div>
+
+                <div class="input-field col s6">
+                  <input type="date" class="datepicker" id="endDate" name="filter[]">
+                  <label for="endDate">End Date</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="input-field col s12">
+                  <select id="dropdown">
+                    <option value="0">Available</option>
+                    <option value="1">Not Confirmed</option>
+                    <option value="2">Confirmed</option>
+                    <option value="3">Cancelled</option>
+                  </select>
+                  <label>Filter By:</label>
+                </div>
+              </div>
+
+              <a class="waves-effect waves-light btn" onclick="getAppointment()">Get Appointments                    <i class="material-icons right">class</i></a>
+
+              <div class="container appointments"></div>
 
           </div>
       </div>

@@ -13,7 +13,6 @@ function validateLogin() {
       if (profile == undefined) {
           Materialize.toast('Invalid User Name or Password. Try again.', 4000);
       } else {
-          //TODO: Handle log in - Messaging
           Materialize.toast('Logging in!', 4000);
 
           setTimeout(function(){

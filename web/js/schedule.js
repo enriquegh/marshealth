@@ -30,7 +30,7 @@ function setSchedule() {
   var open = convertTime(openTime);
   var close = convertTime(closeTime);
 
-  $.post("../api.php/schedule",
+  $.post("http://localhost/api.php/schedule",
       { date: scheduleDate, timeOpen: open, timeClose: close },
       function() {
         Materialize.toast('Schedule created!', 4000);

@@ -7,7 +7,7 @@ function convertTime(time) {
       fixedTime = fixedTime.toString() + ":" + timeSplit[1];
       return fixedTime;
     } else {
-      return time;
+      return timeSplit[0];
     }
 }
 
