@@ -9,7 +9,7 @@ function getAppointment() {
 
     var filter = document.getElementById("dropdown").value;
 
-    var url = "http://localhost/api.php/appointments?";
+    var url = "../api.php/appointments?";
     url += "filter[]=" + scheduleStartDate + "&";
     url += "filter[]=" + scheduleEndDate + "&";
     url += "filter[]=status,eq," + filter;
