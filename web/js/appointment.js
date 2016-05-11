@@ -9,7 +9,7 @@ function getAppointment() {
 
     var filter = document.getElementById("dropdown").value;
 
-    var url = "../api.php/appointments?";
+    var url = "http://localhost/api.php/appointments?";
     url += "filter[]=" + scheduleStartDate + "&";
     url += "filter[]=" + scheduleEndDate + "&";
     url += "filter[]=status,eq," + filter;
@@ -19,7 +19,6 @@ function getAppointment() {
 
         var table = "<table class='appointmentTable centered'><thead><tr><th data-field='date'>Date</th><th data-field='startTime'>Start Time</th><th data-field='endTime'>End Time</th><th data-field='patient'>Patient</th></tr></thead><tbody>"
 
-        //TODO: ADD COLUMN FOR patient
 
         var records = data.appointments.records;
         console.log(records);
