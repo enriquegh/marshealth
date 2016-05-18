@@ -1,3 +1,6 @@
+// Grabs login information, attempts to grab a user with those credentials
+// If successful --> redirect to home page
+// If unsuccessful --> pop up error message
 function validateLogin() {
   var user_name = document.getElementById("username").value;
   var password = document.getElementById("pwd").value;

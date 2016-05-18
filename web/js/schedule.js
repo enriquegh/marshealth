@@ -1,3 +1,4 @@
+// HTTP GET of current schedule, creates an HTML table on page with the data
 function getSchedule() {
     $(".scheduleTable").remove();
 
@@ -21,6 +22,7 @@ function getSchedule() {
     })
 }
 
+// Grabs all schedule values, sends HTTP POST to SQL database
 function setSchedule() {
   var scheduleDate = new Date(document.getElementById("scheduleID").value);
   scheduleDate = convertDate(scheduleDate);

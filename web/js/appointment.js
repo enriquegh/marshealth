@@ -1,33 +1,41 @@
 function getAppointment() {
+    // Grabs start date and formats
     var scheduleStartDate = new Date(document.getElementById("startDate").value);
     scheduleStartDate = convertDate(scheduleStartDate);
     scheduleStartDate = "date,ge," + scheduleStartDate;
 
+    // Grabs end date and formats
     var scheduleEndDate = new Date(document.getElementById("endDate").value);
     scheduleEndDate = convertDate(scheduleEndDate);
     scheduleEndDate = "date,le," + scheduleEndDate;
 
+    // Grabs filter value
     var filter = document.getElementById("dropdown").value;
 
+    // Creates URL using startDate,endDate, and filter
     var url = "../api.php/appointments?";
     url += "filter[]=" + scheduleStartDate + "&";
     url += "filter[]=" + scheduleEndDate + "&";
     url += "filter[]=status,eq," + filter;
 
+    // HTTP GET to url, formats the data
     $.getJSON(url, function(data) {
+        // Remove table if currently active
         $(".appointmentTable").remove();
 
+        // Create long string of HTML to append
         var table = "<table class='appointmentTable centered'><thead><tr><th data-field='date'>Date</th><th data-field='startTime'>Start Time</th><th data-field='endTime'>End Time</th><th data-field='patient'>Patient</th></tr></thead><tbody>"
-
 
         var records = data.appointments.records;
         console.log(records);
 
+        // Go through each appointment slot given in data, create new table entries for each
         for (var i = 0; i < records.length; i++) {
             table += "<tr><td>" + records[i][0] + "</td>" +
             "<td>" + records[i][1] + "</td>" +
             "<td>" + records[i][2] + "</td>";
 
+            // If there's a patient for an appointment slot, grab their name
             if (records[i][4] != undefined) {
                 var patientURL = "../api.php/clients?filter=client_id,eq," + records[i][4];
                 name;
@@ -47,6 +55,7 @@ function getAppointment() {
             table += "</tr>";
         }
 
+        // Append table to the page
         table += "</tbody></table>";
         $(".appointments").append(table);
     })
@@ -71,6 +80,7 @@ function scheduleAppointment() {
           Materialize.toast('(Check spelling and make sure first and last name is capitalized! e.g. John Doe)', 4000);
       } else {
 
+          // Grab all appointment parameters, create URL
           var appointmentDate = new Date(document.getElementById("apptDate").value);
           appointmentDate = convertDate(appointmentDate);
 
@@ -86,6 +96,7 @@ function scheduleAppointment() {
 
           console.log(appointmentDate, start, end);
 
+          // HTTP PUT request to update any valid appointment slots
           $.getJSON(timeUrl, function(timeData) {
               console.log(timeData);
 

@@ -1,3 +1,4 @@
+// Grabs all values from the page, sends a HTTP POST request, and pops a toast message when successful
 function registerUser() {
   var firstName = document.getElementById("first_name").value;
   var lastName = document.getElementById("last_name").value;
