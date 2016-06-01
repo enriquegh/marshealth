@@ -4,9 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AppointmentFragment"
-    tools:showIn="@layout/content_main">
+    tools:showIn="@layout/content_appointments">
 
-    <include layout="@layout/content_main" />
+    <include layout="@layout/content_appointments" />
 
 
 

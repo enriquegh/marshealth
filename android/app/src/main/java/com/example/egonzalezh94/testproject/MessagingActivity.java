@@ -1,3 +1,4 @@
+/*
 package com.example.egonzalezh94.testproject;
 
 import android.content.ComponentName;
@@ -50,7 +51,7 @@ public class MessagingActivity extends AppCompatActivity {
     private EditText mTxtRecipient;
     private Spinner mLstRecipient;
 
-    static final String API_URL = "http://10.10.34.148/api.php/";
+    static final String API_URL = "http://mars.cs.usfca.edu/api.php/";
     static final String STAFF_URL = "staff";
 
     @Override
@@ -177,12 +178,14 @@ public class MessagingActivity extends AppCompatActivity {
 
         protected String doInBackground(Void... params) {
             //String dateStart = params[0], dateEnd = params[1];
-            /**
+            */
+/**
              * This filter string will filter the results in three ways:
              * 1. Send only results that have a status of 0 (meaning status is available)
              * 2. Where the date is equal or greater than the start date.
              * 3. Where the date is equal or less than the end date.
-             */
+             *//*
+
 
             try {
                 //For now I believe this is insecure since the filter parameter is passed
@@ -249,3 +252,4 @@ public class MessagingActivity extends AppCompatActivity {
     }
 
 }
+*/

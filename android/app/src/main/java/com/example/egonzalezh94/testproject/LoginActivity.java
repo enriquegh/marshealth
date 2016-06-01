@@ -31,7 +31,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.10.34.148/api.php/";
+    static final String API_URL = "http://mars.cs.usfca.edu/api.php/";
     static final String CLIENT_URL = "clients";
     EditText email;
     EditText password;
@@ -130,6 +130,11 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject clients = object.getJSONObject("clients");
                 JSONArray recordsList = clients.getJSONArray("records");
                 String username = recordsList.getJSONArray(0).get(3).toString();
+                String userid = recordsList.getJSONArray(0).get(0).toString();
+                String name = recordsList.getJSONArray(0).get(1).toString() + " " + recordsList.getJSONArray(0).get(2).toString();
+
+//                Log.d("userid", userid);
+//                Log.d("name", name);
 
 
                 if (recordsList.length() == 0) {
@@ -142,6 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
                     prefs.edit().putBoolean("isLogin", true).apply(); // isLogin is a boolean value of your login status
                     prefs.edit().putString("username", username).apply();
+                    prefs.edit().putString("userid", userid).apply();
+                    prefs.edit().putString("name", name).apply();
                     Intent intent = new Intent(context, MainActivity.class);
                     Intent serviceIntent = new Intent(context, MessageService.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

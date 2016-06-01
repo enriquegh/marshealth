@@ -20,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
@@ -137,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+/*        if (id == R.id.action_settings) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String currentUserId = prefs.getString("username",null);
             Log.d("currentUserIDMain", currentUserId);
@@ -148,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             //finish();
             return true;
-        }
+        }*/
 
         if (id == R.id.logout) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
