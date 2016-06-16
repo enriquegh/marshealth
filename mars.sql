@@ -21,7 +21,7 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `cancel_day`(appt_day DATE)
 BEGIN
 
-  UPDATE `medical_app`.`appointments` SET status=3 WHERE date=appt_day;
+  UPDATE `mars`.`appointments` SET status=3 WHERE date=appt_day;
 
 END$$
 
@@ -34,7 +34,7 @@ BEGIN
   WHILE @currHour < @endHour DO
   -- execute your queries for every hour
   SET @currHour = ADDTIME(@currHour,'00:15:00');
-  INSERT INTO `medical_app`.`appointments` (`date`, `timeStart`, `timeEnd`, `status`, `patient_id`, `appointment_id`) VALUES (appt_day, @startHour, @currHour, '0', NULL, NULL);
+  INSERT INTO `mars`.`appointments` (`date`, `timeStart`, `timeEnd`, `status`, `patient_id`, `appointment_id`) VALUES (appt_day, @startHour, @currHour, '0', NULL, NULL);
   SET @startHour = ADDTIME(@startHour,'00:15:00');
 
   END WHILE;
@@ -281,22 +281,22 @@ ALTER TABLE `staff_status`
 -- AUTO_INCREMENT for table `appointments`
 --
 ALTER TABLE `appointments`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=203;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `clients`
 --
 ALTER TABLE `clients`
-  MODIFY `client_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `client_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `staff_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `staff_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=0;
 --
 -- Constraints for dumped tables
 --
