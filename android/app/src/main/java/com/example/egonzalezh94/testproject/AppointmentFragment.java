@@ -48,7 +48,7 @@ import java.util.Locale;
 
 public class AppointmentFragment extends Fragment {
 
-    static final String API_URL = "http://mars.cs.usfca.edu/api.php/";
+    static final String API_URL = "http://10.1.99.192/api.php/";
     static final String CLIENT_URL = "clients";
     static final String APPOINTMENT_URL = "appointments";
 

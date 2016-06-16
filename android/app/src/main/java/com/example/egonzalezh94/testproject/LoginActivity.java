@@ -31,7 +31,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://mars.cs.usfca.edu/api.php/";
+    static final String API_URL = "http://10.1.99.192/api.php/";
     static final String CLIENT_URL = "clients";
     EditText email;
     EditText password;
