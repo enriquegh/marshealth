@@ -13,9 +13,7 @@ import com.sinch.android.rtc.messaging.Message;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by egonzalezh94 on 4/30/16.
- */
+
 public class MessageAdapter extends BaseAdapter {
 
     public static final int DIRECTION_INCOMING = 0;

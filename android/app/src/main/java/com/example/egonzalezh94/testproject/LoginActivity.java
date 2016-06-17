@@ -1,6 +1,5 @@
 package com.example.egonzalezh94.testproject;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,9 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -31,7 +28,7 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://10.1.99.192/api.php/";
+    static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
     static final String CLIENT_URL = "clients";
     EditText email;
     EditText password;
@@ -83,13 +80,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected void onPreExecute() {
-            //progressBar.setVisibility(View.VISIBLE);
-            //resultBox.setText("");
+
         }
 
         protected String doInBackground(Object... params) {
-            //String name = nameText.getText().toString();
-            // Do some validation here
 
             String email = (String) params[0];
             String password = (String) params[1];
@@ -120,21 +114,16 @@ public class LoginActivity extends AppCompatActivity {
 
         protected void onPostExecute(String response) {
             if (response == null) {
-                response = "THERE WAS AN ERROR ON RETRIEVECLIENT";
+                response = "THERE WAS AN ERROR ON CHECKCLIENT";
             }
-            //progressBar.setVisibility(View.GONE);
             Log.i("INFO", response);
-            //resultBox.setText(response);
             try {
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONObject clients = object.getJSONObject("clients");
                 JSONArray recordsList = clients.getJSONArray("records");
                 String username = recordsList.getJSONArray(0).get(3).toString();
-                String userid = recordsList.getJSONArray(0).get(0).toString();
+                String userID = recordsList.getJSONArray(0).get(0).toString();
                 String name = recordsList.getJSONArray(0).get(1).toString() + " " + recordsList.getJSONArray(0).get(2).toString();
-
-//                Log.d("userid", userid);
-//                Log.d("name", name);
 
 
                 if (recordsList.length() == 0) {
@@ -147,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
                     prefs.edit().putBoolean("isLogin", true).apply(); // isLogin is a boolean value of your login status
                     prefs.edit().putString("username", username).apply();
-                    prefs.edit().putString("userid", userid).apply();
+                    prefs.edit().putString("userid", userID).apply();
                     prefs.edit().putString("name", name).apply();
                     Intent intent = new Intent(context, MainActivity.class);
                     Intent serviceIntent = new Intent(context, MessageService.class);

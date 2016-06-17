@@ -18,9 +18,7 @@ import com.sinch.android.rtc.messaging.MessageClient;
 import com.sinch.android.rtc.messaging.MessageClientListener;
 import com.sinch.android.rtc.messaging.WritableMessage;
 
-/**
- * Created by egonzalezh94 on 4/28/16.
- */
+
 
 public class MessageService extends Service implements SinchClientListener {
     private static final String APP_KEY = "5d06c12b-32a9-4b43-95f3-3fdd1e2b1902";

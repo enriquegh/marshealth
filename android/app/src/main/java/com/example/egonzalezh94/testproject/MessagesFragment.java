@@ -14,8 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -41,11 +39,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-//import info.androidhive.materialtabs.R;
 
 public class MessagesFragment extends Fragment {
 
-    private String recipientId;
     private EditText messageBodyField;
     private String messageBody;
     private MessageService.MessageServiceInterface messageService;
@@ -78,24 +74,14 @@ public class MessagesFragment extends Fragment {
         view = inflater.inflate(R.layout.activity_messaging, container, false); // inflating the layout
 
         new RetrieveRecipients().execute();
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
 
         getActivity().bindService(new Intent(getContext(), MessageService.class), serviceConnection, Context.BIND_AUTO_CREATE);
 
-        //get recipientId from the intent
-        //mTxtRecipient = (EditText) findViewById(R.id.txtRecipient);
+
         mLstRecipient = (Spinner) view.findViewById(R.id.listRecipient);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        //ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.listRecipientArray, android.R.layout.simple_spinner_dropdown_item);
+
         new RetrieveRecipients().execute();
-        // Specify the layout to use when the list of choices appears
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //mLstRecipient.setAdapter(adapter);
-        //mLstRecipient.setPrompt("Hello");
-
 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -110,8 +96,6 @@ public class MessagesFragment extends Fragment {
         view.findViewById(R.id.btnSend).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //send the message!
-                //String recipient = mTxtRecipient.getText().toString();
                 String recipient = mLstRecipient.getSelectedItem().toString();
                 messageBody = messageBodyField.getText().toString();
                 if (messageBody.isEmpty()) {
@@ -124,21 +108,17 @@ public class MessagesFragment extends Fragment {
             }
         });
 
-//        setContentView(R.layout.activity_messaging);
-
-        // Inflate the layout for this fragment
         return view;
     }
 
 
 
     //unbind the service when the activity is destroyed
-/*    @Override
+    @Override
     public void onDestroy() {
-        unbindService(serviceConnection);
-        stopService(new Intent(getContext(), MessageService.class));
+
         super.onDestroy();
-    }*/
+    }
 
     private class MyServiceConnection implements ServiceConnection {
         @Override
@@ -166,21 +146,14 @@ public class MessagesFragment extends Fragment {
 
         @Override
         public void onIncomingMessage(MessageClient client, Message message) {
-            //Display an incoming message
-            //if (message.getSenderId().equals(recipientId)) {
-            //WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
+
             messageAdapter.addMessage(message, MessageAdapter.DIRECTION_INCOMING);
-            //}
         }
 
         @Override
         public void onMessageSent(MessageClient client, Message message, String recipientId) {
             //Display the message that was just sent
 
-            //Later, I'll show you how to store the
-            //message in Parse, so you can retrieve and
-            //display them every time the conversation is opened
-            //WritableMessage writableMessage = new WritableMessage(message.getRecipientIds().get(0), message.getTextBody());
             messageAdapter.addMessage(message, MessageAdapter.DIRECTION_OUTGOING);
         }
 
@@ -188,7 +161,6 @@ public class MessagesFragment extends Fragment {
         @Override
         public void onMessageDelivered(MessageClient client, MessageDeliveryInfo deliveryInfo) {}
 
-        //Don't worry about this right now
         @Override
         public void onShouldSendPushData(MessageClient client, Message message, List<PushPair> pushPairs) {}
     }
@@ -199,18 +171,9 @@ public class MessagesFragment extends Fragment {
 
 
         protected void onPreExecute() {
-            //progressBar.setVisibility(View.VISIBLE);
-            //resultBox.setText("");
         }
 
         protected String doInBackground(Void... params) {
-            //String dateStart = params[0], dateEnd = params[1];
-            /**
-             * This filter string will filter the results in three ways:
-             * 1. Send only results that have a status of 0 (meaning status is available)
-             * 2. Where the date is equal or greater than the start date.
-             * 3. Where the date is equal or less than the end date.
-             */
 
             try {
                 //For now I believe this is insecure since the filter parameter is passed
@@ -240,11 +203,9 @@ public class MessagesFragment extends Fragment {
 
         protected void onPostExecute(String response) {
             if (response == null) {
-                response = "THERE WAS AN ERROR ON RETRIEVECLIENTS";
+                response = "THERE WAS AN ERROR ON RETRIEVERECIPIENTS";
             }
-            //progressBar.setVisibility(View.GONE);
             try {
-                String pastText;
 
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONObject appointments = object.getJSONObject("staff");
@@ -252,8 +213,6 @@ public class MessagesFragment extends Fragment {
 
                 for (int i = 0; i < recordsList.length(); i++) {
                     JSONArray records = recordsList.getJSONArray(i);
-                    String fName = records.getString(1);
-                    String lName = records.getString(2);
                     String userId = records.getString(3);
 
                     options.add(userId);
@@ -267,13 +226,9 @@ public class MessagesFragment extends Fragment {
 
             } catch (JSONException e) {
                 Log.e("JSON error", e.toString(), e);
-//            }
             }
 
         }
-
-
-
     }
 
 }
