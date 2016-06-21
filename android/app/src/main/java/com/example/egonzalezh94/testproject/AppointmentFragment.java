@@ -3,7 +3,6 @@ package com.example.egonzalezh94.testproject;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,8 +15,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,9 +29,24 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-
+/**
+ * Fragment that shows current appointments available on the database.
+ *
+ * This fragment queries appointments given a timeframe and currently only displays them with no
+ * action to be done after.
+ *
+ * Contains RetrieveSchedule class which asynchronously queries for data from MySQL server.
+ * @see RetrieveSchedule
+ *
+ * @author Enrique Gonzalez
+ * @author Junn Geronimo
+ * @author Bryan Relampagos
+ */
 public class AppointmentFragment extends Fragment {
 
+    /**
+     * This URL needs to be configured to wherever the API and SQL are, local or remote.
+     */
     static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
     static final String APPOINTMENT_URL = "appointments";
 
@@ -52,17 +64,6 @@ public class AppointmentFragment extends Fragment {
     String startDate;
     String endDate;
 
-/*    AppointmentAdapter adapter;
-    ListView appointmentList;*/
-
-
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-
     public AppointmentFragment() {
         // Required empty public constructor
     }
@@ -71,8 +72,6 @@ public class AppointmentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
 
@@ -144,7 +143,7 @@ public class AppointmentFragment extends Fragment {
             updateEnd();
         }
     };
-    // TODO Combine updateStart() and updateEnd() into one function somehow?
+    // TODO Combine updateStart() and updateEnd() into one function
     private void updateStart() {
 
         String dateFormat = "yyyy-MM-dd";
@@ -162,44 +161,30 @@ public class AppointmentFragment extends Fragment {
 
     }
 
-    protected class AppointmentButton extends Button {
-        String appointmentID;
-        String timeStart;
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO Do stuff
-            }
-        };
-
-        public AppointmentButton(Context context, String a, String t) {
-            super(context);
-            appointmentID = a;
-            timeStart = t;
-        }
-
-        public void setAppointmentID(String a) {
-            appointmentID = a;
-        }
-
-        public void setTimeStart(String t) {
-            timeStart = t;
-        }
-    }
-
-
+    /**
+     * Inner class that queries MySQL server for current available appointments given a timeframe.
+     *
+     * Extends from AsyncTask
+     *
+     * see @AsyncTask
+     *
+     */
     class RetrieveSchedule extends AsyncTask<String, Void, String> {
-
-        //To show available appointments only
-
-
+        /**
+         * Progress Bar is enabled to enable user to see an immediate response to the click.
+         */
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
             resultBox.setText("");
         }
 
+        /**
+         *
+         * @param params Start date and End date taken from DatePickerDialog
+         * @return Data returned from MySQL server
+         */
         protected String doInBackground(String... params) {
+
             String dateStart = params[0], dateEnd = params[1];
             /**
              * This filter string will filter the results in three ways:
@@ -234,16 +219,15 @@ public class AppointmentFragment extends Fragment {
             }
         }
 
-        // Available Timeslots view
         protected void onPostExecute(String response) {
             if (response == null) {
                 response = "THERE WAS AN ERROR ON RETRIEVESCHEDULE";
             }
+            //Progress bar disappears when results are received from server
             progressBar.setVisibility(View.GONE);
 
             try {
-                String pastText;
-
+                String prevText;
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONObject appointments = object.getJSONObject("appointments");
                 JSONArray appointmentRecords  = appointments.getJSONArray("records");
@@ -251,33 +235,20 @@ public class AppointmentFragment extends Fragment {
                 // TODO print hourly from time open to time closed (use schedule table)
                 // TODO next to each hour, print 15 min intervals if appointment table doesn't contain an appointment from that time slot
 
-
                     for (int i = 0; i < appointmentRecords.length(); i++) {
                         JSONArray records = appointmentRecords.getJSONArray(i);
                         String date = records.getString(0);
                         String timeStart = records.getString(1);
                         String timeEnd = records.getString(2);
 
-
-                        pastText = (String) resultBox.getText();
-                        String result = String.format("%s \n Date: %s Start: %s End: %s", pastText, date, timeStart, timeEnd);
+                        prevText = (String) resultBox.getText();
+                        String result = String.format("%s \n Date: %s Start: %s End: %s", prevText, date, timeStart, timeEnd);
                         resultBox.setText(result);
                     }
-
-
 
             } catch (JSONException e) {
                 Log.e("JSON error", e.toString(), e);
             }
-
-
-            
-
         }
-
-
-
     }
-
-
 }
