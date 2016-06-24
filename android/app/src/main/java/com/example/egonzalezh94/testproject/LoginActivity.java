@@ -28,7 +28,11 @@ import java.net.URL;
 
 public class LoginActivity extends AppCompatActivity {
 
-    static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
+    /**
+     * This URL needs to be configured to wherever the API and SQL are, local or remote.
+     */
+    static final String API_URL = "http://10.1.25.213/api.php/";
+    //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
     static final String CLIENT_URL = "clients";
     EditText email;
     EditText password;
@@ -44,9 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Check if user has logged in before
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         isLogin = prefs.getBoolean("isLogin", false);
 
+        //If user is already logged in, change activity and start Message Service
         if(isLogin) {
             Intent intent = new Intent(this, MainActivity.class);
             Intent serviceIntent = new Intent(getApplicationContext(), MessageService.class);
@@ -121,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONObject clients = object.getJSONObject("clients");
                 JSONArray recordsList = clients.getJSONArray("records");
+                //TODO: Check if empty
                 String username = recordsList.getJSONArray(0).get(3).toString();
                 String userID = recordsList.getJSONArray(0).get(0).toString();
                 String name = recordsList.getJSONArray(0).get(1).toString() + " " + recordsList.getJSONArray(0).get(2).toString();
@@ -138,16 +145,14 @@ public class LoginActivity extends AppCompatActivity {
                     prefs.edit().putString("username", username).apply();
                     prefs.edit().putString("userid", userID).apply();
                     prefs.edit().putString("name", name).apply();
+
                     Intent intent = new Intent(context, MainActivity.class);
                     Intent serviceIntent = new Intent(context, MessageService.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                     startActivity(intent);
                     startService(serviceIntent);
-
-
                     finish();
-
-
                 }
 
                 else { //Shouldn't have more than two records with same password and email
@@ -157,13 +162,18 @@ public class LoginActivity extends AppCompatActivity {
             catch (JSONException e) {
                 Log.e("JSON error", e.toString(), e);
             }
-
-
         }
-
     }
 
 
+    /**
+     * This function is called when the Login button is pressed. See content_login.xml
+     * Gets client's username and password and sends them to CheckClient to check if credentials
+     * are valid.
+     *
+     * @link content_login.xml
+     * @param view
+     */
     public void checkLogin(View view) {
         email = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
@@ -172,15 +182,14 @@ public class LoginActivity extends AppCompatActivity {
         passwordString = password.getText().toString();
 
         new CheckClient(this).execute(emailString, passwordString);
-
-
-
-
     }
 
-
+    /**
+     * Function called when "Call" button is pressed and would call the physician's office.
+     * @param view
+     */
     public void call(View view) {
-        String phoneNum = "6195653087";
+        String phoneNum = "ENTER PHONE NUMBER";
 
         Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(phoneNum));
         startActivity(callIntent);

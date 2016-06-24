@@ -1,8 +1,6 @@
 package com.example.egonzalezh94.testproject;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -47,11 +45,9 @@ public class AppointmentFragment extends Fragment {
     /**
      * This URL needs to be configured to wherever the API and SQL are, local or remote.
      */
-    static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
+    static final String API_URL = "http://10.1.25.213/api.php/";
+    //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
     static final String APPOINTMENT_URL = "appointments";
-
-    private ProgressDialog progressDialog;
-    private BroadcastReceiver receiver = null;
 
     EditText startDateText;
     EditText endDateText;

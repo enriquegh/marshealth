@@ -53,7 +53,12 @@ public class MessagesFragment extends Fragment {
     private EditText mTxtRecipient;
     private Spinner mLstRecipient;
 
-    static final String API_URL = "http://10.1.99.192/api.php/";
+    /**
+     * This URL needs to be configured to wherever the API and SQL are, local or remote.
+     */
+    static final String API_URL = "http://10.1.25.213/api.php/";
+    //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
+
     static final String STAFF_URL = "staff";
 
     public MessagesFragment() {
@@ -73,16 +78,11 @@ public class MessagesFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.activity_messaging, container, false); // inflating the layout
 
-        new RetrieveRecipients().execute();
-
         getActivity().bindService(new Intent(getContext(), MessageService.class), serviceConnection, Context.BIND_AUTO_CREATE);
-
 
         mLstRecipient = (Spinner) view.findViewById(R.id.listRecipient);
 
-
         new RetrieveRecipients().execute();
-
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         currentUserId = prefs.getString("username","DEFAULT_NO");
@@ -110,8 +110,6 @@ public class MessagesFragment extends Fragment {
 
         return view;
     }
-
-
 
     //unbind the service when the activity is destroyed
     @Override
