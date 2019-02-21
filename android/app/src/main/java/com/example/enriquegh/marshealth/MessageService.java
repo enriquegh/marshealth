@@ -1,4 +1,4 @@
-package com.example.egonzalezh94.testproject;
+package com.example.enriquegh.marshealth;
 
 import android.app.Service;
 import android.content.Intent;

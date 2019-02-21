@@ -1,4 +1,4 @@
-package com.example.egonzalezh94.testproject;
+package com.example.enriquegh.marshealth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.egonzalezh94.testproject.util.BaseURLUtility;
+import com.example.enriquegh.marshealth.util.BaseURLUtility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +24,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;

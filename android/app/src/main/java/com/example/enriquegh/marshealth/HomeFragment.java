@@ -1,4 +1,4 @@
-package com.example.egonzalezh94.testproject;
+package com.example.enriquegh.marshealth;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

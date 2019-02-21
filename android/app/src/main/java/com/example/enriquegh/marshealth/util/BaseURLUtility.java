@@ -1,13 +1,6 @@
-package com.example.egonzalezh94.testproject.util;
+package com.example.enriquegh.marshealth.util;
 
-import android.content.Context;
-import android.content.res.AssetManager;
-
-import com.example.egonzalezh94.testproject.BuildConfig;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import com.example.enriquegh.marshealth.BuildConfig;
 
 public class BaseURLUtility {
 

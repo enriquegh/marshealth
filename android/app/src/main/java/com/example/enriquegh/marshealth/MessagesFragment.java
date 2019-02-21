@@ -1,4 +1,4 @@
-package com.example.egonzalezh94.testproject;
+package com.example.enriquegh.marshealth;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -20,7 +20,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.egonzalezh94.testproject.util.BaseURLUtility;
+import com.example.enriquegh.marshealth.util.BaseURLUtility;
 import com.sinch.android.rtc.PushPair;
 import com.sinch.android.rtc.messaging.Message;
 import com.sinch.android.rtc.messaging.MessageClient;

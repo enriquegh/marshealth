@@ -1,4 +1,4 @@
-package com.example.egonzalezh94.testproject;
+package com.example.enriquegh.marshealth;
 
 import android.app.DatePickerDialog;
 import android.os.AsyncTask;
@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.egonzalezh94.testproject.util.BaseURLUtility;
+import com.example.enriquegh.marshealth.util.BaseURLUtility;
 
 import org.json.JSONArray;
 import org.json.JSONException;
