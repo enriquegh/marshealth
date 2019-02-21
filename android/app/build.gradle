@@ -10,6 +10,8 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0.1"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
 
         buildConfigField("String","BASE_URL","\"https://mars.enriquegh.com\"")
     }
@@ -29,4 +31,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.google.firebase:firebase-appindexing:17.1.0'
     implementation files('libs/sinch-android-rtc-3.9.3.jar')
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
