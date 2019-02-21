@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0.1"
+
+        buildConfigField("String","BASE_URL","\"https://mars.enriquegh.com\"")
     }
     buildTypes {
         release {

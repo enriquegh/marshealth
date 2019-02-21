@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.egonzalezh94.testproject.util.BaseURLUtility;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,8 +47,7 @@ public class AppointmentFragment extends Fragment {
     /**
      * This URL needs to be configured to wherever the API and SQL are, local or remote.
      */
-    static final String API_URL = "https://mars.enriquegh.com/api.php/";
-    //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
+    static final String API_URL = BaseURLUtility.getApiURL();
     static final String APPOINTMENT_URL = "appointments";
 
     EditText startDateText;

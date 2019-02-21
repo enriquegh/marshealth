@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.egonzalezh94.testproject.util.BaseURLUtility;
 import com.sinch.android.rtc.PushPair;
 import com.sinch.android.rtc.messaging.Message;
 import com.sinch.android.rtc.messaging.MessageClient;
@@ -56,8 +57,7 @@ public class MessagesFragment extends Fragment {
     /**
      * This URL needs to be configured to wherever the API and SQL are, local or remote.
      */
-    static final String API_URL = "https://mars.enriquegh.com/api.php/";
-    //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
+    static final String API_URL = BaseURLUtility.getApiURL();
 
     static final String STAFF_URL = "staff";
 
