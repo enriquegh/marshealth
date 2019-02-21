@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * This URL needs to be configured to wherever the API and SQL are, local or remote.
      */
-    static final String API_URL = "https://mars.enriquegh.com/api.php/";
+    static final String API_URL = "https://selfsigned.enriquegh.com/api.php/";
     //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
     static final String CLIENT_URL = "clients";
     EditText email;
