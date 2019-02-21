@@ -45,7 +45,7 @@ public class AppointmentFragment extends Fragment {
     /**
      * This URL needs to be configured to wherever the API and SQL are, local or remote.
      */
-    static final String API_URL = "http://10.1.25.213/api.php/";
+    static final String API_URL = "https://mars.enriquegh.com/api.php/";
     //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
     static final String APPOINTMENT_URL = "appointments";
 

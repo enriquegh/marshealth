@@ -5,7 +5,7 @@ function validateLogin() {
   var user_name = document.getElementById("username").value;
   var password = document.getElementById("pwd").value;
 
-  var url = "../api.php/staff?"
+  var url = "http://mars.enriquegh.com/api.php/staff?"
   url += "filter[]=username,eq," + user_name + "&";
   url += "filter[]=pwd,eq," + password;
 

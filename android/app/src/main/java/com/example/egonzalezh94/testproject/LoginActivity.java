@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * This URL needs to be configured to wherever the API and SQL are, local or remote.
      */
-    static final String API_URL = "http://10.1.25.213/api.php/";
+    static final String API_URL = "https://mars.enriquegh.com/api.php/";
     //static final String API_URL = "http://[INSERT SERVER ADDRESS]/api.php/";
     static final String CLIENT_URL = "clients";
     EditText email;
@@ -60,6 +61,12 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             startService(serviceIntent);
             finish();
+        }
+        String base_url = "";
+        try {
+            base_url = Util.getProperty("BASE_URL", getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 

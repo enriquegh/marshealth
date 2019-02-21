@@ -5,7 +5,7 @@ function registerUser() {
   var password = document.getElementById("password").value;
   var emailAddress = document.getElementById("email").value;
 
-  $.post("../api.php/clients",
+  $.post("http://mars.health.com/api.php/clients",
       { name: firstName, l_name: lastName, email: emailAddress, pwd: password, status: 1 },
       function() {
         Materialize.toast('New user registered!', 4000);

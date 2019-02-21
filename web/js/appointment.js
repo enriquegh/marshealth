@@ -13,7 +13,7 @@ function getAppointment() {
     var filter = document.getElementById("dropdown").value;
 
     // Creates URL using startDate,endDate, and filter
-    var url = "../api.php/appointments?";
+    var url = "http://mars.health.com/api.php/appointments?";
     url += "filter[]=" + scheduleStartDate + "&";
     url += "filter[]=" + scheduleEndDate + "&";
     url += "filter[]=status,eq," + filter;
@@ -37,7 +37,7 @@ function getAppointment() {
 
             // If there's a patient for an appointment slot, grab their name
             if (records[i][4] != undefined) {
-                var patientURL = "../api.php/clients?filter=client_id,eq," + records[i][4];
+                var patientURL = "http://mars.enriquegh.com/api.php/clients?filter=client_id,eq," + records[i][4];
                 name;
 
                 $.getJSON(patientURL, function(patientData) {
@@ -65,7 +65,7 @@ function scheduleAppointment() {
   var firstName = document.getElementById("first_name").value;
   var lastName = document.getElementById("last_name").value;
 
-  var url = "../api.php/clients?"
+  var url = "http://mars.enriquegh.com/api.php/clients?"
   url += "filter[]=name,eq," + firstName + "&";
   url += "filter[]=l_name,eq," + lastName;
 
@@ -89,7 +89,7 @@ function scheduleAppointment() {
           var start = convertTime(startTime);
           var end = convertTime(endTime);
 
-          var timeUrl = "../api.php/appointments?"
+          var timeUrl = "http://mars.enriquegh.com/api.php/appointments?"
           timeUrl += "filter[]=date,eq," + appointmentDate + "&";
           timeUrl += "filter[]=timeStart,ge," + start + "&";
           timeUrl += "filter[]=timeEnd,le," + end;
@@ -110,7 +110,7 @@ function scheduleAppointment() {
               console.log(appts);
 
               for(var t = 0; t < appts.length; t++) {
-                  var apptURL = "../api.php/appointments/" + appts[t]
+                  var apptURL = "http://mars.enriquegh.com/api.php/appointments/" + appts[t]
 
                   $.ajax({
                       url: apptURL,
