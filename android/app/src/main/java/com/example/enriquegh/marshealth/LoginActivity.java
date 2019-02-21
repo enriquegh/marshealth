@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
      * @param view
      */
     public void call(View view) {
-        String phoneNum = "ENTER PHONE NUMBER";
+        String phoneNum = "tel:555-555-5555";
 
         Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(phoneNum));
         startActivity(callIntent);
