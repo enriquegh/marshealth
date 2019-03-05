@@ -63,11 +63,6 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
         String base_url = "";
-        try {
-            base_url = Util.getProperty("BASE_URL", getApplicationContext());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
