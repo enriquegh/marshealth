@@ -30,7 +30,7 @@ public class MessageService extends Service implements SinchClientListener {
     private String currentUserId = null;
 
     private LocalBroadcastManager broadcaster;
-    private Intent broadcastIntent = new Intent("com.example.egonzalezh94.testproject.MainActivity");
+    private Intent broadcastIntent = new Intent("com.example.enriquegh.marshealth.MainActivity");
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

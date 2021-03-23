@@ -172,6 +172,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.example.egonzalezh94.testproject.MainActivity"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.example.enriquegh.marshealth.MainActivity"));
     }
 }
