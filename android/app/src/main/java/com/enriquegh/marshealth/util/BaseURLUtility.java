@@ -1,6 +1,6 @@
-package com.example.enriquegh.marshealth.util;
+package com.enriquegh.marshealth.util;
 
-import com.example.enriquegh.marshealth.BuildConfig;
+import com.enriquegh.marshealth.BuildConfig;
 
 public class BaseURLUtility {
 

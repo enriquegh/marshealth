@@ -1,4 +1,4 @@
-package com.example.enriquegh.marshealth;
+package com.enriquegh.marshealth;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.enriquegh.marshealth.util.BaseURLUtility;
+import com.enriquegh.marshealth.util.BaseURLUtility;
 
 import org.json.JSONArray;
 import org.json.JSONException;

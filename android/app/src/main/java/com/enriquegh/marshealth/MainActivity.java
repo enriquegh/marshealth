@@ -1,4 +1,4 @@
-package com.example.enriquegh.marshealth;
+package com.enriquegh.marshealth;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -172,6 +172,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.example.enriquegh.marshealth.MainActivity"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, new IntentFilter("com.enriquegh.marshealth.MainActivity"));
     }
 }

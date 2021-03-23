@@ -1,4 +1,4 @@
-package com.example.enriquegh.marshealth;
+package com.enriquegh.marshealth;
 
 import android.app.Service;
 import android.content.Intent;
@@ -30,7 +30,7 @@ public class MessageService extends Service implements SinchClientListener {
     private String currentUserId = null;
 
     private LocalBroadcastManager broadcaster;
-    private Intent broadcastIntent = new Intent("com.example.enriquegh.marshealth.MainActivity");
+    private Intent broadcastIntent = new Intent("com.enriquegh.marshealth.MainActivity");
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

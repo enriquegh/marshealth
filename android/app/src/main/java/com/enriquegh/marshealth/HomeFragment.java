@@ -1,4 +1,4 @@
-package com.example.enriquegh.marshealth;
+package com.enriquegh.marshealth;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
