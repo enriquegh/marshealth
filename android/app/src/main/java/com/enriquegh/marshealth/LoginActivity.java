@@ -129,11 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONObject clients = object.getJSONObject("clients");
                 JSONArray recordsList = clients.getJSONArray("records");
-                //TODO: Check if empty
-                String username = recordsList.getJSONArray(0).get(3).toString();
-                String userID = recordsList.getJSONArray(0).get(0).toString();
-                String name = recordsList.getJSONArray(0).get(1).toString() + " " + recordsList.getJSONArray(0).get(2).toString();
-
 
                 if (recordsList.length() == 0) {
                     TextView tv = findViewById(R.id.loginText);
@@ -141,6 +136,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
                 else if (recordsList.length() == 1) {
+                    String username = recordsList.getJSONArray(0).get(3).toString();
+                    String userID = recordsList.getJSONArray(0).get(0).toString();
+                    String name = recordsList.getJSONArray(0).get(1).toString() + " " + recordsList.getJSONArray(0).get(2).toString();
                     //Result should be valid
                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
                     prefs.edit().putBoolean("isLogin", true).apply(); // isLogin is a boolean value of your login status

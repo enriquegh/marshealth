@@ -41,12 +41,14 @@
     <TextView
         android:id="@+id/loginText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#F44336" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Not Registered? Give us a call!"/>
+        android:text="Not Registered? Give us a call!"
+        android:textColor="#000000" />
 
     <Button
         android:id="@+id/callButton"
