@@ -1,4 +1,4 @@
-package com.example.enriquegh.marshealth;
+package com.enriquegh.marshealth;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
