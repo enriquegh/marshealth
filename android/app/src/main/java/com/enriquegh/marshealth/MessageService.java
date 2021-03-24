@@ -41,8 +41,6 @@ public class MessageService extends Service implements SinchClientListener {
         if (currentUserId != null && !isSinchClientStarted()) {
             startSinchClient(currentUserId);
         }
-        else {
-        }
         broadcaster = LocalBroadcastManager.getInstance(this);
         return super.onStartCommand(intent, flags, startId);
     }

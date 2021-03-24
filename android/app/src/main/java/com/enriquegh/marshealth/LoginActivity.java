@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         //Check if user has logged in before
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -136,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (recordsList.length() == 0) {
-                    TextView tv = (TextView) findViewById(R.id.loginText);
+                    TextView tv = findViewById(R.id.loginText);
                     tv.setText("Invalid username or password");
 
                 }
@@ -177,8 +177,8 @@ public class LoginActivity extends AppCompatActivity {
      * @param view - Current view
      */
     public void checkLogin(View view) {
-        email = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
+        email = findViewById(R.id.username);
+        password = findViewById(R.id.password);
 
         emailString = email.getText().toString();
         passwordString = password.getText().toString();

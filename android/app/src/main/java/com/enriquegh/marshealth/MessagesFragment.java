@@ -39,6 +39,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class MessagesFragment extends Fragment {
@@ -76,18 +77,18 @@ public class MessagesFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.activity_messaging, container, false); // inflating the layout
 
-        getActivity().bindService(new Intent(getContext(), MessageService.class), serviceConnection, Context.BIND_AUTO_CREATE);
+        Objects.requireNonNull(getActivity()).bindService(new Intent(getContext(), MessageService.class), serviceConnection, Context.BIND_AUTO_CREATE);
 
-        mLstRecipient = (Spinner) view.findViewById(R.id.listRecipient);
+        mLstRecipient = view.findViewById(R.id.listRecipient);
 
         new RetrieveRecipients().execute();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String currentUserId = prefs.getString("username", "DEFAULT_NO");
 
-        messageBodyField = (EditText) view.findViewById(R.id.txtTextBody);
+        messageBodyField = view.findViewById(R.id.txtTextBody);
 
-        ListView messagesList = (ListView) view.findViewById(R.id.lstMessages);
+        ListView messagesList = view.findViewById(R.id.lstMessages);
         messageAdapter = new MessageAdapter(getActivity());
         messagesList.setAdapter(messageAdapter);
         //listen for a click on the send button
@@ -126,6 +127,7 @@ public class MessagesFragment extends Fragment {
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             messageService = null;
+            assert messageService != null;
             messageService.removeMessageClientListener(messageClientListener);
         }
     }
@@ -217,7 +219,7 @@ public class MessagesFragment extends Fragment {
 
                 }
                 ArrayAdapter<String> adapter;
-                adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,options);
+                adapter = new ArrayAdapter<>(Objects.requireNonNull(getContext()),android.R.layout.simple_spinner_dropdown_item,options);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mLstRecipient.setAdapter(adapter);
 

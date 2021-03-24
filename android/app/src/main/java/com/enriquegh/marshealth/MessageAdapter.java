@@ -75,7 +75,7 @@ public class MessageAdapter extends BaseAdapter {
 
         Message message = messages.get(i).first;
 
-        TextView txtMessage = (TextView) convertView.findViewById(R.id.txtMessage);
+        TextView txtMessage = convertView.findViewById(R.id.txtMessage);
         txtMessage.setText(message.getTextBody());
 
         return convertView;

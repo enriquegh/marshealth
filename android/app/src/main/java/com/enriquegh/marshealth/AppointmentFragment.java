@@ -28,6 +28,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Fragment that shows current appointments available on the database.
@@ -77,10 +78,10 @@ public class AppointmentFragment extends Fragment {
         View view;
         view = inflater.inflate(R.layout.fragment_appointments, container, false); // inflating the layout
 
-        startDateText = (EditText) view.findViewById(R.id.startDateText);
-        endDateText = (EditText) view.findViewById(R.id.endDateText);
-        resultBox = (TextView) view.findViewById(R.id.newTextBox);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        startDateText = view.findViewById(R.id.startDateText);
+        endDateText = view.findViewById(R.id.endDateText);
+        resultBox = view.findViewById(R.id.newTextBox);
+        progressBar = view.findViewById(R.id.progressBar);
 
 
 
@@ -88,18 +89,18 @@ public class AppointmentFragment extends Fragment {
         startDateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getContext(), startListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(Objects.requireNonNull(getContext()), startListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
         endDateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(getContext(), endListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(Objects.requireNonNull(getContext()), endListener, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
 
-        Button queryButton = (Button) view.findViewById(R.id.queryButton);
+        Button queryButton = view.findViewById(R.id.queryButton);
         queryButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
