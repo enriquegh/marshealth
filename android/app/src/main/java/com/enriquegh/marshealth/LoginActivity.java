@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     static final String API_URL = BaseURLUtility.getApiURL();
     static final String CLIENT_URL = "clients";
+    private static final String TAG = "LoginActivity";
     EditText email;
     EditText password;
 
@@ -114,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
 
-                Log.e("ERROR", e.toString(), e);
+                Log.e(TAG, e.toString(), e);
 
                 return null;
             }
@@ -124,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             if (response == null) {
                 response = "THERE WAS AN ERROR ON CHECKCLIENT";
             }
-            Log.i("INFO", response);
+            Log.i(TAG, "Response: " + response);
             try {
                 JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
                 JSONObject clients = object.getJSONObject("clients");
@@ -160,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
             catch (JSONException e) {
-                Log.e("JSON error", e.toString(), e);
+                Log.e(TAG, "JSON Error" + e.toString(), e);
             }
         }
     }

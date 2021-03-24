@@ -52,6 +52,8 @@ public class MessagesFragment extends Fragment {
     private MessageAdapter messageAdapter;
     private EditText mTxtRecipient;
     private Spinner mLstRecipient;
+    private static final String TAG = "MessagesFragment";
+
 
     /**
      * This URL needs to be configured to wherever the API and SQL are, local or remote.
@@ -102,7 +104,7 @@ public class MessagesFragment extends Fragment {
                     return;
                 }
                 messageService.sendMessage(recipient, messageBody);
-                Log.d("DEBUG", messageBody);
+                Log.d(TAG, messageBody);
                 messageBodyField.setText("");
             }
         });
@@ -194,7 +196,7 @@ public class MessagesFragment extends Fragment {
                 }
             } catch (Exception e) {
 
-                Log.e("ERROR", e.toString(), e);
+                Log.e(TAG, e.toString(), e);
 
                 return null;
             }
@@ -215,7 +217,7 @@ public class MessagesFragment extends Fragment {
                     String userId = records.getString(3);
 
                     options.add(userId);
-                    Log.d("OPTIONS",userId);
+                    Log.d(TAG,userId);
 
                 }
                 ArrayAdapter<String> adapter;
@@ -224,7 +226,7 @@ public class MessagesFragment extends Fragment {
                 mLstRecipient.setAdapter(adapter);
 
             } catch (JSONException e) {
-                Log.e("JSON error", e.toString(), e);
+                Log.e(TAG, "JSON Error: " + e.toString(), e);
             }
 
         }

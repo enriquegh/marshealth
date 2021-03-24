@@ -31,13 +31,15 @@ public class MessageService extends Service implements SinchClientListener {
 
     private LocalBroadcastManager broadcaster;
     private final Intent broadcastIntent = new Intent("com.enriquegh.marshealth.MainActivity");
+    private static final String TAG = "LoginActivity";
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //get the current user id from Parse
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String currentUserId = prefs.getString("username", "DEFAULT_NO");
-        Log.d("currentUserIDMessServ", currentUserId);
+        Log.d(TAG, "currentUserIDMessServ " +  currentUserId);
         if (currentUserId != null && !isSinchClientStarted()) {
             startSinchClient(currentUserId);
         }
@@ -67,7 +69,7 @@ public class MessageService extends Service implements SinchClientListener {
     //The next 5 methods are for the sinch client listener
     @Override
     public void onClientFailed(SinchClient client, SinchError error) {
-        Log.d("onclientFailed",error.getMessage());
+        Log.d(TAG, "onclientFailed "+ error.getMessage());
         sinchClient = null;
         broadcastIntent.putExtra("success", false);
         broadcaster.sendBroadcast(broadcastIntent);
@@ -75,16 +77,16 @@ public class MessageService extends Service implements SinchClientListener {
     @Override
     public void onClientStarted(SinchClient client) {
         client.startListeningOnActiveConnection();
-        Log.d("DEBUG", "onclientstarted was called");
+        Log.d(TAG, "onclientstarted was called");
         messageClient = client.getMessageClient();
-        Log.d("sinchclientstarted",Boolean.toString(sinchClient != null));
-        Log.d("messageClientstarted",Boolean.toString(messageClient != null));
+        Log.d(TAG, "sinchclientstarted: " + Boolean.toString(sinchClient != null));
+        Log.d(TAG, "messageClientstarted: " + Boolean.toString(messageClient != null));
         broadcastIntent.putExtra("success", true);
         broadcaster.sendBroadcast(broadcastIntent);
     }
     @Override
     public void onClientStopped(SinchClient client) {
-        Log.d("ClientStopped", "sinch client got stopped");
+        Log.d(TAG, "ClientStopped: sinch client got stopped");
         //sinchClient = null;
     }
     @Override
@@ -98,13 +100,13 @@ public class MessageService extends Service implements SinchClientListener {
     public void sendMessage(String recipientUserId, String textBody) {
         boolean statement = messageClient != null;
         String clientIsStarted = Boolean.toString(statement);
-        Log.e("sendmessageClient", clientIsStarted);
+        Log.e(TAG, "sendmessageClient:" + clientIsStarted);
         if (messageClient != null) {
             WritableMessage message = new WritableMessage(recipientUserId, textBody);
             messageClient.send(message);
         }
         else {
-            Log.e("ERROR", "Message was not sent!");
+            Log.e(TAG, "Message was not sent!");
         }
     }
     public void addMessageClientListener(MessageClientListener listener) {

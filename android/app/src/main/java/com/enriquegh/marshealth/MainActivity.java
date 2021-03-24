@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private ProgressDialog progressDialog;
+    private static final String TAG = "LoginActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

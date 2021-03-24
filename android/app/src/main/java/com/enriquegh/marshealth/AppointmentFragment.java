@@ -62,6 +62,9 @@ public class AppointmentFragment extends Fragment {
     String startDate;
     String endDate;
 
+    private static final String TAG = "MessagesFragment";
+
+
     public AppointmentFragment() {
         // Required empty public constructor
     }
@@ -211,7 +214,7 @@ public class AppointmentFragment extends Fragment {
                 }
             } catch (Exception e) {
 
-                Log.e("ERROR", e.toString(), e);
+                Log.e(TAG, e.toString(), e);
 
                 return null;
             }
@@ -245,7 +248,7 @@ public class AppointmentFragment extends Fragment {
                     }
 
             } catch (JSONException e) {
-                Log.e("JSON error", e.toString(), e);
+                Log.e(TAG, "JSON Error: " + e.toString(), e);
             }
         }
     }
