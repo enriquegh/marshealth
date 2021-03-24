@@ -20,6 +20,7 @@ import com.sinch.android.rtc.messaging.WritableMessage;
 
 
 
+@SuppressWarnings("SpellCheckingInspection")
 public class MessageService extends Service implements SinchClientListener {
     private static final String APP_KEY = "5d06c12b-32a9-4b43-95f3-3fdd1e2b1902";
     private static final String APP_SECRET = "eA+Nf7aCuEeoF2Acr79iMA==";
@@ -27,17 +28,16 @@ public class MessageService extends Service implements SinchClientListener {
     private final MessageServiceInterface serviceInterface = new MessageServiceInterface();
     private SinchClient sinchClient = null;
     private MessageClient messageClient;
-    private String currentUserId = null;
 
     private LocalBroadcastManager broadcaster;
-    private Intent broadcastIntent = new Intent("com.enriquegh.marshealth.MainActivity");
+    private final Intent broadcastIntent = new Intent("com.enriquegh.marshealth.MainActivity");
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         //get the current user id from Parse
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        currentUserId = prefs.getString("username","DEFAULT_NO");
-        Log.d("currentUserIDMessServ",currentUserId);
+        String currentUserId = prefs.getString("username", "DEFAULT_NO");
+        Log.d("currentUserIDMessServ", currentUserId);
         if (currentUserId != null && !isSinchClientStarted()) {
             startSinchClient(currentUserId);
         }

@@ -32,7 +32,7 @@ import java.util.Locale;
 /**
  * Fragment that shows current appointments available on the database.
  *
- * This fragment queries appointments given a timeframe and currently only displays them with no
+ * This fragment queries appointments given a time frame and currently only displays them with no
  * action to be done after.
  *
  * Contains RetrieveSchedule class which asynchronously queries for data from MySQL server.
@@ -117,7 +117,7 @@ public class AppointmentFragment extends Fragment {
 
     }
 
-    // Global listeners for startDate and endDate EditText objeects
+    // Global listeners for startDate and endDate EditText objects
     DatePickerDialog.OnDateSetListener startListener = new DatePickerDialog.OnDateSetListener() {
 
         @Override
@@ -159,7 +159,7 @@ public class AppointmentFragment extends Fragment {
     }
 
     /**
-     * Inner class that queries MySQL server for current available appointments given a timeframe.
+     * Inner class that queries MySQL server for current available appointments given a time frame.
      *
      * Extends from AsyncTask
      *
@@ -183,11 +183,11 @@ public class AppointmentFragment extends Fragment {
         protected String doInBackground(String... params) {
 
             String dateStart = params[0], dateEnd = params[1];
-            /**
-             * This filter string will filter the results in three ways:
-             * 1. Send only results that have a status of 0 (meaning status is available)
-             * 2. Where the date is equal or greater than the start date.
-             * 3. Where the date is equal or less than the end date.
+            /*
+              This filter string will filter the results in three ways:
+              1. Send only results that have a status of 0 (meaning status is available)
+              2. Where the date is equal or greater than the start date.
+              3. Where the date is equal or less than the end date.
              */
             final String filter = String.format("?filter[]=status,eq,0&filter[]=date,ge,%s&filter[]=date,le,%s", dateStart, dateEnd);
             try {

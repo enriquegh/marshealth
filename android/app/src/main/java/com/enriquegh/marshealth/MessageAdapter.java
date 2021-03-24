@@ -19,16 +19,16 @@ public class MessageAdapter extends BaseAdapter {
     public static final int DIRECTION_INCOMING = 0;
     public static final int DIRECTION_OUTGOING = 1;
 
-    private List<Pair<Message, Integer>> messages;
-    private LayoutInflater layoutInflater;
+    private final List<Pair<Message, Integer>> messages;
+    private final LayoutInflater layoutInflater;
 
     public MessageAdapter(Activity activity) {
         layoutInflater = activity.getLayoutInflater();
-        messages = new ArrayList();
+        messages = new ArrayList<>();
     }
 
     public void addMessage(Message message, int direction) {
-        messages.add(new Pair(message, direction));
+        messages.add(new Pair<>(message, direction));
         notifyDataSetChanged();
     }
 

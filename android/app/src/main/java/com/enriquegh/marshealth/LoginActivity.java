@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     class CheckClient extends AsyncTask<Object, Void, String> {
-        private Context context;
+        private final Context context;
         public CheckClient(Context context){
             this.context=context;
         }
@@ -174,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
      * are valid.
      *
      * @link content_login.xml
-     * @param view
+     * @param view - Current view
      */
     public void checkLogin(View view) {
         email = (EditText) findViewById(R.id.username);
@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
 
     /**
      * Function called when "Call" button is pressed and would call the physician's office.
-     * @param view
+     * @param view - Current view
      */
     public void call(View view) {
         String phoneNum = "tel:555-555-5555";

@@ -46,10 +46,8 @@ public class MessagesFragment extends Fragment {
     private EditText messageBodyField;
     private String messageBody;
     private MessageService.MessageServiceInterface messageService;
-    private String currentUserId;
-    private ServiceConnection serviceConnection = new MyServiceConnection();
-    private MessageClientListener messageClientListener = new MyMessageClientListener();
-    private ListView messagesList;
+    private final ServiceConnection serviceConnection = new MyServiceConnection();
+    private final MessageClientListener messageClientListener = new MyMessageClientListener();
     private MessageAdapter messageAdapter;
     private EditText mTxtRecipient;
     private Spinner mLstRecipient;
@@ -85,11 +83,11 @@ public class MessagesFragment extends Fragment {
         new RetrieveRecipients().execute();
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        currentUserId = prefs.getString("username","DEFAULT_NO");
+        String currentUserId = prefs.getString("username", "DEFAULT_NO");
 
         messageBodyField = (EditText) view.findViewById(R.id.txtTextBody);
 
-        messagesList = (ListView) view.findViewById(R.id.lstMessages);
+        ListView messagesList = (ListView) view.findViewById(R.id.lstMessages);
         messageAdapter = new MessageAdapter(getActivity());
         messagesList.setAdapter(messageAdapter);
         //listen for a click on the send button
@@ -163,6 +161,7 @@ public class MessagesFragment extends Fragment {
         public void onShouldSendPushData(MessageClient client, Message message, List<PushPair> pushPairs) {}
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     class RetrieveRecipients extends AsyncTask<Void, Void, String> {
 
         ArrayList<String> options=new ArrayList<>();
@@ -218,7 +217,7 @@ public class MessagesFragment extends Fragment {
 
                 }
                 ArrayAdapter<String> adapter;
-                adapter = new ArrayAdapter(getContext(),android.R.layout.simple_spinner_dropdown_item,options);
+                adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,options);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 mLstRecipient.setAdapter(adapter);
 

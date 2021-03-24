@@ -27,10 +27,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     private ProgressDialog progressDialog;
-    private BroadcastReceiver receiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
         showSpinner();
 
         // Fragments
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         getWindow().setSoftInputMode(
@@ -66,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
     // Fragments
     class ViewPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 3;
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -77,21 +73,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if(position == 0){
-                AppointmentFragment tab1 = new AppointmentFragment();
-                return tab1;
+                return new AppointmentFragment();
             }else if(position == 1){
-                HomeFragment tab2 = new HomeFragment();
-                return tab2;
+                return new HomeFragment();
             }else{
-                MessagesFragment tab3 = new MessagesFragment();
-                return tab3;
+                return new MessagesFragment();
             }
         }
 
 
         @Override
         public int getCount() {
-            return PAGE_COUNT;
+            return mFragmentList.size();
         }
 
         public void addFragment(Fragment fragment, String title) {
@@ -126,8 +119,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-/*        if (id == R.id.action_settings) {
+        /*        if (id == R.id.action_settings) {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             String currentUserId = prefs.getString("username",null);
             Log.d("currentUserIDMain", currentUserId);
@@ -161,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
 
-        receiver = new BroadcastReceiver() {
+        BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Boolean success = intent.getBooleanExtra("success", false);

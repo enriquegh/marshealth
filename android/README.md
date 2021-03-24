@@ -11,7 +11,7 @@ I have included some screenshots on the images folder on the root of the project
 
 ## Things completed
 
-- Robust messaging app, enabling staff and patient to communicate effecitvely eliminating number of calls received in the office.
+- Robust messaging app, enabling staff and patient to communicate effectively eliminating number of calls received in the office.
 
 - Online appointment search for current, available appointments.
 
