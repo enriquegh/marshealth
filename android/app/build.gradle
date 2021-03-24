@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.github.alexfu.androidautoversion'
 
 android {
     compileSdkVersion 28
@@ -8,8 +9,8 @@ android {
         applicationId "com.enriquegh.marshealth"
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0.1"
+        versionName androidAutoVersion.versionName
+        versionCode androidAutoVersion.versionCode
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
