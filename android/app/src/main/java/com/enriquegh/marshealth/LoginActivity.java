@@ -16,6 +16,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.enriquegh.marshealth.network.LoginErrorResponseListener;
+import com.enriquegh.marshealth.network.LoginResponseListener;
 import com.enriquegh.marshealth.util.BaseURLUtility;
 
 import org.json.JSONArray;
@@ -27,6 +35,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -82,91 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    class CheckClient extends AsyncTask<Object, Void, String> {
-        private final Context context;
-        public CheckClient(Context context){
-            this.context=context;
-        }
-
-        protected void onPreExecute() {
-
-        }
-
-        protected String doInBackground(Object... params) {
-
-            String email = (String) params[0];
-            String password = (String) params[1];
-
-            String filter = String.format("?filter[]=email,eq,%s&filter[]=pwd,eq,%s", email, password);
-            try {
-                URL url = new URL(API_URL + CLIENT_URL + filter);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                try {
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line).append("\n");
-                    }
-                    bufferedReader.close();
-                    return stringBuilder.toString();
-                } finally {
-                    urlConnection.disconnect();
-                }
-            } catch (Exception e) {
-
-                Log.e(TAG, e.toString(), e);
-
-                return null;
-            }
-        }
-
-        protected void onPostExecute(String response) {
-            if (response == null) {
-                response = "THERE WAS AN ERROR ON CHECKCLIENT";
-            }
-            Log.i(TAG, "Response: " + response);
-            try {
-                JSONObject object = (JSONObject) new JSONTokener(response).nextValue();
-                JSONObject clients = object.getJSONObject("clients");
-                JSONArray recordsList = clients.getJSONArray("records");
-
-                if (recordsList.length() == 0) {
-                    TextView tv = findViewById(R.id.loginText);
-                    tv.setText("Invalid username or password");
-
-                }
-                else if (recordsList.length() == 1) {
-                    String username = recordsList.getJSONArray(0).get(3).toString();
-                    String userID = recordsList.getJSONArray(0).get(0).toString();
-                    String name = recordsList.getJSONArray(0).get(1).toString() + " " + recordsList.getJSONArray(0).get(2).toString();
-                    //Result should be valid
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-                    prefs.edit().putBoolean("isLogin", true).apply(); // isLogin is a boolean value of your login status
-                    prefs.edit().putString("username", username).apply();
-                    prefs.edit().putString("userid", userID).apply();
-                    prefs.edit().putString("name", name).apply();
-
-                    Intent intent = new Intent(context, MainActivity.class);
-                    Intent serviceIntent = new Intent(context, MessageService.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                    startActivity(intent);
-                    startService(serviceIntent);
-                    finish();
-                }
-
-                else { //Shouldn't have more than two records with same password and email
-                    //TODO: Throw exception
-                }
-            }
-            catch (JSONException e) {
-                Log.e(TAG, "JSON Error" + e.toString(), e);
-            }
-        }
-    }
-
-
     /**
      * This function is called when the Login button is pressed. See content_login.xml
      * Gets client's username and password and sends them to CheckClient to check if credentials
@@ -182,7 +106,19 @@ public class LoginActivity extends AppCompatActivity {
         emailString = email.getText().toString();
         passwordString = password.getText().toString();
 
-        new CheckClient(this).execute(emailString, passwordString);
+
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        String filter = String.format("?filter[]=email,eq,%s&filter[]=pwd,eq,%s", emailString, passwordString);
+        String url = API_URL + CLIENT_URL + filter;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new LoginResponseListener(this, TAG),
+                new LoginErrorResponseListener(this, TAG)
+        );
+        queue.add(stringRequest);
+
     }
 
     /**
